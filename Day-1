@@ -1,1 +1,33 @@
+# Day 1 - 100 Days of Code
+
+## 📅 Date:
+May 21, 2025
+
+## ✅ Today's Progress:
+- Solved LeetCode Problem [485. Max Consecutive Ones](https://leetcode.com/problems/max-consecutive-ones/)
+- Practiced basic array traversal and conditional logic in C++
+- Learned how to track consecutive values in a binary array
+
+## 🧠 What I Learned:
+- How to use a vector to store sequences of 1s
+- Using `.size()` to find the length of sequences
+- Resetting vector when a non-1 is encountered
+- Basic optimization and edge case handling
+
+## 🧩 Code Snippet:
+```cpp
+int findMaxConsecutiveOnes(vector<int>& nums) {
+    int maxOne = 0;
+    vector<int> ones;
+    for (int i = 0; i < nums.size(); i++) {
+        if (nums[i] != 1) {
+            if (ones.size() > maxOne) maxOne = ones.size();
+            ones.clear();
+        } else {
+            ones.push_back(nums[i]);
+        }
+    }
+    if (ones.size() > maxOne) maxOne = ones.size();
+    return maxOne;
+}
 
