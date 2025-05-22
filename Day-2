@@ -1,1 +1,68 @@
 
+# Day 2 - 100 Days of Code
+
+## 📅 Date:
+May 22, 2025
+
+## ✅ Today's Progress:
+- Solved 3 LeetCode problems:
+  - [136. Single Number](https://leetcode.com/problems/single-number/)
+  - [560. Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/)
+  - [75. Sort Colors](https://leetcode.com/problems/sort-colors/)
+- Practiced bitwise XOR, nested loops for subarrays, and sorting via counting
+- Improved understanding of space and time optimization in C++
+
+## 🧠 What I Learned:
+- Using XOR to cancel out duplicate elements for constant space and linear time
+- Brute-force approach to find all subarrays summing to a target value
+- Count and overwrite method to sort limited-range integers without built-in functions
+
+## 🧩 Code Snippets:
+
+
+```cpp
+int singleNumber(vector<int>& nums) {
+    int unique = 0;
+    for (int i = 0; i < nums.size(); i++) {
+        unique ^= nums[i];
+    }
+    return unique;
+}
+
+
+int subarraySum(vector<int>& nums, int k) {
+    int n = nums.size();
+    int sum = 0, cnt = 0;
+    for (int i = 0; i < n; i++) {
+        sum += nums[i];
+        if (sum == k) cnt++;
+        for (int j = i + 1; j < n; j++) {
+            sum += nums[j];
+            if (sum == k) cnt++;
+        }
+        sum = 0;
+    }
+    return cnt;
+}
+
+void sortColors(vector<int>& nums) {
+    int cnt0 = 0, cnt1 = 0, cnt2 = 0;
+    int n = nums.size();
+    for (int i = 0; i < n; i++) {
+        if (nums[i] == 0) cnt0++;
+        if (nums[i] == 1) cnt1++;
+        else cnt2++;
+    }
+    for (int i = 0; i < n; i++) {
+        if (cnt0) {
+            nums[i] = 0;
+            cnt0--;
+        } else if (cnt1) {
+            nums[i] = 1;
+            cnt1--;
+        } else {
+            nums[i] = 2;
+            cnt2--;
+        }
+    }
+}
