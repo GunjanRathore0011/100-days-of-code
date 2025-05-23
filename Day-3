@@ -1,0 +1,104 @@
+# 🚀 Day 3 - 100 Days of Code
+
+## 📅 Date:  
+May 23, 2025
+
+---
+
+## ✅ Today's Progress:
+- Solved 4 LeetCode problems using C++ STL and algorithmic techniques:
+  - [1. Two Sum](https://leetcode.com/problems/two-sum/)
+  - [169. Majority Element](https://leetcode.com/problems/majority-element/)
+  - [53. Maximum Subarray](https://leetcode.com/problems/maximum-subarray/)
+  - [2149. Rearrange Array Elements by Sign](https://leetcode.com/problems/rearrange-array-elements-by-sign/)
+- Learned and implemented:
+  - 🗳️ Moore’s Voting Algorithm
+  - 📈 Kadane’s Algorithm
+
+---
+
+## 🧠 What I Learned:
+- Using unordered_map (hash map) for constant-time lookups in the Two Sum problem
+- Moore’s Voting Algorithm to find majority elements efficiently in O(n) time and O(1) space
+- Kadane’s Algorithm for solving maximum subarray sum problems in linear time
+- Rearranging arrays by separating positive and negative elements while maintaining order and alternating signs
+
+---
+
+## 🧩 Code Snippets:
+
+### 🔹 Moore's Voting Algorithm
+```cpp
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        int ele;
+        int cnt=0;
+
+        for(int i=0;i<nums.size();i++){
+            if(cnt==0){
+                cnt=1;
+                ele=nums[i];
+            }
+            else if(nums[i]==ele){
+                cnt++;
+            }
+            else cnt--;
+        }
+
+        int cnt1=0;
+        for(int i=0;i<nums.size();i++){
+            if(nums[i]==ele) cnt1++;
+        }
+        if(cnt1>(nums.size()/2)) return ele;
+
+        return 0;
+
+    }
+};
+### 🔹 Kadane’s Algorithm
+
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int maxSum=INT_MIN;
+        int sum=0;
+        int n=nums.size();
+
+        for(int i=0;i<n;i++){
+           
+            sum+=nums[i];
+            maxSum=max(sum,maxSum);
+
+            if(sum<0) sum=0;
+           
+        }
+        return maxSum;
+    }
+};
+
+### 🔹  Rearranging by Sign
+class Solution {
+public:
+    vector<int> rearrangeArray(vector<int>& nums) {
+        vector<int> pos;
+        vector<int> neg;
+
+        int n=nums.size();
+
+        for(int i=0;i<n;i++){
+            if(nums[i]>=0) pos.push_back(nums[i]);
+            else neg.push_back(nums[i]);
+        }
+
+        int j=0;
+        for(int i=0;i<pos.size();i++){
+            nums[j]=pos[i];
+            j++;
+            nums[j]=neg[i];
+            j++;
+        }
+        return nums;
+    }
+};
+
