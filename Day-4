@@ -1,0 +1,93 @@
+# 🚀 Day 4 - 100 Days of Code
+
+## 📅 Date:  
+May 24, 2025
+
+---
+
+## ✅ Today's Progress:
+- Solved 4 LeetCode problems using C++ STL and algorithmic techniques:
+  - [1464. Maximum Product of Two Elements in an Array](https://leetcode.com/problems/maximum-product-of-two-elements-in-an-array/)
+  - [3550. Smallest Index With Digit Sum Equal to Index](https://leetcode.com/problems/smallest-index-with-digit-sum-equal-to-index/)
+  - [121. Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)
+  - [2942. Find Words Containing Character](https://leetcode.com/problems/find-words-containing-character/)
+
+---
+
+## 🧠 What I Learned:
+- Efficient linear scans can outperform sorting for specific array-based product problems.
+- Practiced digit extraction using modulo and division logic in integer manipulation.
+- Applied the **min-so-far** technique for finding maximum profit in stock trading.
+- Leveraged the `count()` function from STL to identify substring occurrences concisely.
+
+---
+
+## 🧩 Code Snippets:
+
+### 🔹 Maximum Product of Two Elements in an Array
+```cpp
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        int fNum=nums[0]-1;
+        int maxP=0;
+
+        for(int i=1;i<nums.size();i++){         
+            maxP=max(maxP,(nums[i]-1)*fNum);
+            fNum=max(fNum,(nums[i]-1));
+        }
+        return maxP;
+    }
+};
+```
+
+### 🔹 Smallest Index With Digit Sum Equal to Index
+```cpp
+class Solution {
+public:
+    int smallestIndex(vector<int>& nums) {
+        int n=nums.size();
+        for(int i=0;i<n;i++){ 
+            int sum=0, num=nums[i];
+            while(num){
+                sum+=num%10;
+                num/=10;
+            }
+            if(sum==i) return i;
+        }
+        return -1;
+    }
+};
+```
+
+### 🔹 Best Time to Buy and Sell Stock
+```cpp
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int n=prices.size();
+        int profit=0, minPrice=prices[0];
+
+        for(int i=1;i<n;i++){ 
+            minPrice=min(minPrice,prices[i]);
+            profit=max(profit,prices[i]-minPrice);
+        }
+        return profit;
+    }
+};
+```
+
+### 🔹 Find Words Containing Character
+```cpp
+class Solution {
+public:
+    vector<int> findWordsContaining(vector<string>& words, char x) {
+        vector<int> ans;
+        for(int i=0;i<words.size();i++){ 
+            if(count(words[i].begin(), words[i].end(), x))
+                ans.push_back(i);
+        }
+        return ans;
+    }
+};
+```
