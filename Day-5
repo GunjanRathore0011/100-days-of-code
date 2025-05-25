@@ -1,0 +1,97 @@
+
+# 🚀 Day 5 - 100 Days of Code
+
+## 📅 Date:  
+May 25, 2025
+
+---
+
+## ✅ Today's Progress:
+- Solved 3 coding problems:
+  - ✅ [2131. Longest Palindrome by Concatenating Two Letter Words (POTD)](https://leetcode.com/problems/longest-palindrome-by-concatenating-two-letter-words/)
+  - ✅ [Q1. Find Minimum Log Transportation Cost (LeetCode Contest)]
+  - ✅ [Q2. Resulting String After Adjacent Removals (LeetCode Contest)]
+
+---
+
+## 🧠 What I Learned:
+- Leveraged hash maps and reverse string logic to count matching palindrome pairs.
+- Implemented conditional logic and integer arithmetic for optimized cost calculation in grid-based problems.
+- Used stack-like behavior in string processing to remove adjacent characters based on ASCII proximity.
+
+---
+
+## 🧩 Code Snippets:
+
+### 🔹 2131. Longest Palindrome by Concatenating Two Letter Words
+```cpp
+class Solution {
+public:
+    int longestPalindrome(vector<string>& words) {
+        map<string, int> mp;
+        int result = 0;
+        int samestring = 0;
+
+        for (int i = 0; i < words.size(); i++) {
+            string rWord = words[i];
+            reverse(rWord.begin(), rWord.end());
+
+            if (rWord == words[i]) {
+                samestring++;
+            }
+
+            if (mp.find(rWord) != mp.end() && mp[rWord] > 0) {
+                if (rWord == words[i]) samestring -= 2;
+                mp[rWord]--;
+                result += 4;
+            } else {
+                mp[words[i]]++;
+            }
+        }
+        if (samestring > 0) {
+            result += 2;
+        }
+        return result;
+    }
+};
+```
+
+### 🔹 Q1. Find Minimum Log Transportation Cost
+```cpp
+class Solution {
+public:
+    long long minCuttingCost(int n, int m, int k) {
+        int len1;
+        long long cost1 = 0;
+        long long cost2 = 0;
+        if (n > k) {
+            len1 = n - k;
+            cost1 = (long long)k * (long long)len1;
+        }
+        if (m > k) {
+            len1 = m - k;
+            cost2 = (long long)k * (long long)len1;
+        }
+        return cost1 + cost2;
+    }
+};
+```
+
+### 🔹 Q2. Resulting String After Adjacent Removals
+```cpp
+class Solution {
+public:
+    string resultingString(string s) {
+        string result;
+        for (char c : s) {
+            if (!result.empty() &&
+                (abs(result.back() - c) == 1 || abs(result.back() - c) == 25)) {
+                result.pop_back();
+            } else {
+                result.push_back(c); 
+            }
+        }
+        return result;
+    }
+};
+```
