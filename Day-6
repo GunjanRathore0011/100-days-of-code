@@ -1,0 +1,71 @@
+# Daily LeetCode Solutions 🚀
+
+## 📅 Today's Highlights
+
+**2181. Merge Nodes in Between Zeros**  
+Traverses a linked list to merge values between zeroes into one node.
+
+- **2807. Insert Greatest Common Divisors in Linked List**  
+  Inserts a new node between each pair of nodes containing the GCD of their values.
+
+---
+
+### 🔥 Code Snapshots
+
+#### 2181. Merge Nodes in Between Zeros
+```cpp
+class Solution {
+public:
+    ListNode* mergeNodes(ListNode* head) {
+        ListNode* curr = head->next;
+        ListNode* temp = curr;
+        int sum = 0;
+        while (temp) {
+            if (temp->val == 0) {
+                curr->val = sum;
+                curr->next = temp->next;
+                curr = curr->next;
+                sum = 0;
+            } else {
+                sum += temp->val;
+            }
+            temp = temp->next;
+        }
+        return head->next;
+    }
+};
+```
+
+#### 2807. Insert Greatest Common Divisors in Linked List
+```cpp
+class Solution {
+public:
+    ListNode* insertGreatestCommonDivisors(ListNode* head) {
+        if (head->next == NULL) return head;
+        ListNode* curr = head;
+        ListNode* temp = head->next;
+
+        while (temp) {
+            ListNode* newNode = new ListNode(GCD(curr->val, temp->val));
+            curr->next = newNode;
+            newNode->next = temp;
+            curr = temp;
+            temp = temp->next;
+        }
+        return head;
+    }
+
+private:
+    int GCD(int a, int b) {
+        int num = min(a, b);
+        for (int i = num; i >= 1; i--) {
+            if (a % i == 0 && b % i == 0) return i;
+        }
+        return 1;
+    }
+};
+```
+
+---
+
+Crushing linked lists one node at a time! ⚙️🔥
