@@ -1,0 +1,96 @@
+# Daily LeetCode Solutions 🚀
+
+## 📅 Day 7 Highlights
+
+### 🔹 2894. Divisible and Non-divisible Sums Difference
+Finds the difference between the sum of numbers not divisible by `m` and those that are.
+
+```cpp
+class Solution {
+public:
+    int differenceOfSums(int n, int m) {
+        int num1 = 0;
+        for (int i = 1; i <= n; i++) {
+            if (i % m) num1 += i;
+        }
+        int num2 = (n * (n + 1) / 2) - num1;
+        return num1 - num2;
+    }
+};
+```
+
+---
+
+### 🔹 2487. Remove Nodes From Linked List
+Removes all nodes that have a greater node on their right side using a reverse technique.
+
+```cpp
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if (head == NULL || head->next == NULL) return head;
+        ListNode* newHead = reverseList(head->next);
+        ListNode* front = head->next;
+        front->next = head;
+        head->next = NULL;
+        return newHead;
+    }
+
+    ListNode* removeNodes(ListNode* head) {
+        if (!head->next) return head;
+        ListNode* rHead = reverseList(head);
+        ListNode* temp = rHead;
+        ListNode* prev = temp;
+        int maxVal = 0;
+        while (temp) {
+            if (temp->val < maxVal) {
+                prev->next = temp->next;
+                temp = temp->next;
+            } else {
+                prev = temp;
+                maxVal = max(maxVal, temp->val);
+                temp = temp->next;
+            }
+        }
+        return reverseList(rHead);
+    }
+};
+```
+
+---
+
+### 🔹 1769. Minimum Number of Operations to Move All Balls to Each Box
+Uses prefix sums from both directions to compute the number of operations.
+
+```cpp
+class Solution {
+public:
+    vector<int> minOperations(string boxes) {
+        int n = boxes.size();
+        vector<int> left(n, 0), right(n, 0), res(n, 0);
+        int count = (boxes.at(0) == '1' ? 1 : 0);
+
+        for (int i = 1; i < n; i++) {
+            left[i] = left[i - 1] + count;
+            count += (boxes.at(i) == '1' ? 1 : 0);
+        }
+
+        count = (boxes.at(n - 1) == '1' ? 1 : 0);
+
+        for (int i = n - 2; i >= 0; i--) {
+            right[i] = right[i + 1] + count;
+            count += (boxes.at(i) == '1' ? 1 : 0);
+        }
+
+        for (int i = 0; i < n; i++) {
+            res[i] = left[i] + right[i];
+        }
+
+        return res;
+    }
+};
+```
+
+---
+
+Still grinding through challenges 💪 Let's keep the streak alive! 🔥
