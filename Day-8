@@ -1,0 +1,26 @@
+# Daily LeetCode Solutions 🚀
+
+## 📅 Day 8 Highlight
+
+### 🔹 2000. Reverse Prefix of Word
+Given a string and a character `ch`, reverse the prefix of the string up to and including the first occurrence of `ch`.
+
+```cpp
+class Solution {
+public:
+    string reversePrefix(string str, char ch) {
+        int n = str.size();
+        for (int i = 0; i < n; i++) {
+            if (str[i] == ch) {
+                reverse(str.begin(), str.begin() + i + 1);
+                break;
+            }
+        }
+        return str;
+    }
+};
+```
+
+---
+
+✅ Simple and clean string manipulation using STL's `reverse`!
