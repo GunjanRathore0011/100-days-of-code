@@ -1,0 +1,55 @@
+# 📘 LeetCode Solutions – Day 10
+
+> Daily progress update for #100DaysOfCode challenge
+
+## ✅ Problems Solved
+
+### 1. [1672. Richest Customer Wealth](https://leetcode.com/problems/richest-customer-wealth/)
+**Approach:** Brute-force. Iterated through each customer account and calculated their total wealth. Tracked the maximum.
+
+```cpp
+class Solution {
+public:
+    int maximumWealth(vector<vector<int>>& accounts) {
+        int m=accounts.size();
+        int n=accounts[0].size();
+        int maxW=0;
+        for(int i=0;i<m;i++){
+            int wealth=0;
+            for(int j=0;j<n;j++){
+                wealth+=accounts[i][j];
+            }
+            maxW=max(maxW,wealth);
+        }
+        return maxW;
+    }
+};
+```
+
+---
+
+### 2. [1365. How Many Numbers Are Smaller Than the Current Number](https://leetcode.com/problems/how-many-numbers-are-smaller-than-the-current-number/)
+**Approach:** Brute-force. For each element, counted how many others are smaller.
+
+```cpp
+class Solution {
+public:
+    vector<int> smallerNumbersThanCurrent(vector<int>& nums) {
+        vector<int> ans(nums.size(),0);
+        for(int i=0;i<nums.size();i++){
+            int cnt=0;
+            for(int j=0;j<nums.size();j++){
+                if(i!=j && nums[i]>nums[j]) cnt++;
+            }
+            ans[i]=cnt;
+        }
+        return ans;
+    }
+};
+```
+
+---
+
+📅 **Day:** 10  
+🛠️ **Focus:** Simple brute-force logic to stay consistent while prepping for exams  
+🔁 #100DaysOfCode #LeetCode #CPlusPlus
