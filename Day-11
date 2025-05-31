@@ -1,0 +1,70 @@
+# 🔥 Day 11 - LeetCode Solutions
+
+> 📅 Date: 2025-05-31  
+> 🧵 Progress: Day 11 of #100DaysOfCode  
+> ✍️ Focused on strengthening fundamentals with these two problems.
+
+---
+
+## ✅ 1. [73. Set Matrix Zeroes](https://leetcode.com/problems/set-matrix-zeroes/)
+
+### 💡 Approach
+Used extra space with `unordered_set` to mark zeroed rows and columns, then set respective elements to `0` in a second pass.
+
+### 🔍 Code
+```cpp
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+        unordered_set<int> row;
+        unordered_set<int> col;
+        int n = matrix.size();
+        int m = matrix[0].size();
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (matrix[i][j] == 0) {
+                    row.insert(i);
+                    col.insert(j);
+                }
+            }
+        }
+
+        for (int index : row) {
+            for (int j = 0; j < m; j++) {
+                matrix[index][j] = 0;
+            }
+        }
+
+        for (int index : col) {
+            for (int i = 0; i < n; i++) {
+                matrix[i][index] = 0;
+            }
+        }
+    }
+};
+```
+
+---
+
+## ✅ 2. [35. Search Insert Position](https://leetcode.com/problems/search-insert-position/)
+
+### 💡 Approach
+Binary search to find the appropriate position (or exact match) for inserting a target number.
+
+### 🔍 Code
+```cpp
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target) {
+        int lo = 0;
+        int hi = nums.size() - 1;
+        while (lo <= hi) {
+            int mid = (lo - hi) / 2 + hi;
+            if (nums[mid] == target) return mid;
+            if (nums[mid] < target) lo = mid + 1;
+            else hi = mid - 1;
+        }
+        return lo;
+    }
+};
+```
