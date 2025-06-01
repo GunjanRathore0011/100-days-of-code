@@ -1,0 +1,57 @@
+# Day 12 of #100DaysOfCode
+
+Today I solved the following LeetCode problems in C++:
+
+## ✅ 2130. Maximum Twin Sum of a Linked List
+**Problem Link:** [Maximum Twin Sum of a Linked List](https://leetcode.com/problems/maximum-twin-sum-of-a-linked-list/)  
+**Approach:** Used a vector to store all values of the linked list and then calculated max twin sums from both ends.
+
+```cpp
+class Solution {
+public:
+    int pairSum(ListNode* head) {
+        ListNode* temp = head;
+        vector<int> v;
+        while (temp) {
+            v.push_back(temp->val);
+            temp = temp->next;
+        }
+        int i = 0, j = v.size() - 1;
+        int pSum = 0;
+        while (i < j) {
+            pSum = max(pSum, (v[i] + v[j]));
+            i++; j--;
+        }
+        return pSum;
+    }
+};
+```
+
+---
+
+## ✅ 258. Add Digits
+**Problem Link:** [Add Digits](https://leetcode.com/problems/add-digits/)  
+**Approach:** Brute-force approach using repeated digit sum until the result is a single digit.
+
+```cpp
+class Solution {
+public:
+    int addDigits(int num) {
+        int n = num, sum = 0;
+        while (n > 9) {
+            sum = 0;
+            while (n > 0) {
+                sum += n % 10;
+                n /= 10;
+            }
+            n = sum;
+        }
+        return n;
+    }
+};
+```
+
+---
+
+Keeping things simple and consistent with semester exams coming up! 📚  
+#100DaysOfCode #LeetCode #CPlusPlus #Coding
