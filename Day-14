@@ -1,0 +1,60 @@
+# 🚀 Day 14 - 100 Days of Code
+
+## 📅 Date:
+June 03, 2025
+
+---
+
+## ✅ Today's Progress:
+
+
+  - ✅ [61. Rotate List](https://leetcode.com/problems/rotate-list/)
+  - ✅ [3146. Permutation Difference between Two Strings](https://leetcode.com/problems/permutation-difference-between-two-strings/)
+
+
+---
+
+## 🧩 Code Snippets:
+
+
+### 🔹 61. Rotate List
+```cpp
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head, int k) {
+        int len=1;
+        ListNode* temp=head;
+        if(head==NULL || head->next==NULL) return head;
+        while(temp->next){
+            temp=temp->next;
+            len++;
+        }
+        int n=len-(k%len);
+        if(n==len) return head;
+        temp->next=head;
+        for(int i=0;i<(n);i++){
+            temp=temp->next;
+        }
+        head=temp->next;
+        temp->next=NULL;
+        return head;
+    }
+};
+```
+
+### 🔹 3146. Permutation Difference between Two Strings
+```cpp
+class Solution {
+public:
+    int findPermutationDifference(string s, string t) {
+        
+        int pD=0;
+        for(int i=0;i<s.size();i++){
+            for(int j=0;j<t.size();j++){
+                if(t[j]==s[i]) pD+=abs(i-j);
+            }
+        }
+        return pD;
+    }
+};
+```
