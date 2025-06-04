@@ -1,0 +1,49 @@
+# 🚀 Day 15 - 100 Days of Code
+
+## 📅 Date:  
+June 04, 2025
+
+---
+
+## ✅ Today's Progress:
+- Solved 1 coding problem on LeetCode:
+  - ✅ [2788. Split Strings by Separator](https://leetcode.com/problems/split-strings-by-separator/)
+- 📘 Studied Machine Learning for semester exams.
+
+---
+
+## 🧠 What I Learned:
+- Used character iteration and string manipulation to split input strings into tokens based on a given separator.
+- Practiced clean handling of empty substrings and edge cases.
+
+---
+
+## 🧩 Code Snippet:
+
+### 🔹 2788. Split Strings by Separator
+```cpp
+class Solution {
+public:
+    vector<string> splitWordsBySeparator(vector<string>& words, char separator) {
+        vector<string> ans;
+        for(int i=0;i<words.size();i++) {
+            string s="";
+            for(int j=0;j<words[i].size();j++) {
+                if(words[i][j]==separator) {
+                    if(s.empty()) continue;
+                    ans.push_back(s);
+                    s="";
+                }
+                else {
+                    s+=words[i][j];
+                }
+            }
+            if(!s.empty()) ans.push_back(s);
+        }
+        return ans;
+    }
+};
+```
+
+---
+
