@@ -1,0 +1,40 @@
+# 🚀 Day 16 - 100 Days of Code
+
+## 📅 Date:  
+June 5, 2025
+
+---
+
+## ✅ Today's Progress:
+- Solved 1 coding problem:
+  - ✅ [520. Detect Capital](https://leetcode.com/problems/detect-capital/)
+
+---
+
+## 🧠 What I Learned:
+- Applied character ASCII comparisons to determine correct capitalization usage.
+- Learned edge case handling for words starting with uppercase followed by lowercase characters.
+- Optimized the logic to avoid STL usage for improved runtime.
+
+---
+
+## 🧩 Code Snippet:
+
+### 🔹 520. Detect Capital
+```cpp
+class Solution {
+public:
+    bool detectCapitalUse(string word) {
+        bool cap=true;
+        for(int i=0; i<word.size();i++){
+            if(word[i]>=65 && word[i]<=90 ) {
+                if(!cap) return false;
+            }
+            else {
+                if(i>1 && word[i-1]>=65 && word[i-1]<=90) return false;
+                cap=false;
+            }
+        }   
+        return true;
+    }
+};
