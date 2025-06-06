@@ -1,0 +1,69 @@
+# 🚀 Day 17 - 100 Days of Code
+
+## 📅 Date:  
+June 6, 2025
+
+---
+
+## ✅ Today's Progress:
+- Solved 2 coding problems on LeetCode:
+  - ✅ [24. Swap Nodes in Pairs](https://leetcode.com/problems/swap-nodes-in-pairs/)
+  - ✅ [2960. Count Tested Devices After Test Operations](https://leetcode.com/problems/count-tested-devices-after-test-operations/)
+
+---
+
+## 🧠 What I Learned:
+- Practiced linked list node manipulation, including careful pointer reassignments for pairwise swaps.
+- Applied conditional logic to simulate decreasing battery percentages after each test operation using a greedy approach.
+
+---
+
+## 🧩 Code Snippets:
+
+### 🔹 24. Swap Nodes in Pairs
+```cpp
+class Solution {
+public:
+    ListNode* swapPairs(ListNode* head) {
+        if(head==NULL || head->next==NULL) return head;
+        ListNode* prev=NULL;
+        ListNode* curr=head;
+        ListNode* sec=head->next;
+        ListNode* third=NULL;
+        ListNode* ans=head->next;
+
+        while(curr && sec){
+            if(sec) third=sec->next;
+            sec->next=curr;
+            if(prev) prev->next=sec;
+            curr->next=third;
+            prev=curr;
+            curr=third;
+            if(third) sec=third->next;
+        }
+
+        return ans;
+    }
+};
+```
+
+### 🔹 2960. Count Tested Devices After Test Operations
+```cpp
+class Solution {
+public:
+    int countTestedDevices(vector<int>& batPer) {
+        int n=batPer.size();
+        int cnt=0;
+
+        for(int i=0;i<n;i++){
+            if(batPer[i]>0){
+                cnt++;
+                for(int j=i+1;j<n;j++){
+                    batPer[j]=max(0,batPer[j]-1);
+                }
+            }
+        }
+        return cnt;
+    }
+};
+```
