@@ -1,0 +1,54 @@
+# 🚀 Day 20 - 100 Days of Code
+
+## 📅 Date:  
+June 10, 2025
+
+---
+
+## ✅ Today's Progress:
+- Solved 1 coding problem:
+  - ✅ [3442. Maximum Difference Between Even and Odd Frequency I (POTD)](https://leetcode.com/problems/maximum-difference-between-even-and-odd-frequency-i/)
+
+---
+
+## 🧠 What I Learned:
+- Practiced frequency mapping using `map<char, int>` in C++.
+- Applied logic to handle edge cases between even and odd character frequencies.
+
+---
+
+## 🧩 Code Snippet:
+
+### 🔹 3442. Maximum Difference Between Even and Odd Frequency I
+```cpp
+class Solution {
+public:
+    int maxDifference(string s) {
+        map<char,int> mp;
+        for(char c: s){
+            mp[c]++;
+        }
+        int lO=s.size();
+        int hO=0;
+        int lE=s.size();
+        int hE=0;
+        for(auto ele: mp){
+            if(ele.second%2==0) {
+                lE=min(lE,ele.second);
+                hE=max(hE,ele.second);
+            }
+            else{
+                lO=min(lO,ele.second);
+                hO=max(hO,ele.second);
+            }
+        }
+        if( (lO-hE) < (hO-lE) ) return hO-lE;
+        else return lO-hE;
+    }
+};
+```
+
+---
+
+## 📚 Also Studying:
+- Computer Networks for upcoming semester exams.
