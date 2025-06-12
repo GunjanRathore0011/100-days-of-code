@@ -1,0 +1,36 @@
+# 🚀 Day 23 - 100 Days of Code
+
+## 📅 Date:  
+June 12, 2025
+
+---
+
+## ✅ Today's Progress:
+- Solved the LeetCode Problem of the Day:
+  - ✅ [3423. Maximum Difference Between Adjacent Elements in a Circular Array](https://leetcode.com/problems/maximum-difference-between-adjacent-elements-in-a-circular-array/)
+
+---
+
+## 🧠 What I Learned:
+- How to handle circular arrays by comparing the first and last element.
+- Used `abs()` and a simple loop to track the max difference.
+- Reinforced understanding of array traversal edge cases.
+
+---
+
+## 🧩 Code Snippet:
+
+### 🔹 3423. Maximum Difference Between Adjacent Elements in a Circular Array
+```cpp
+class Solution {
+public:
+    int maxAdjacentDistance(vector<int>& nums) {
+        int n = nums.size();
+        int mDif = abs(nums[0] - nums[n - 1]);
+        for (int i = 0; i < n - 1; i++) {
+            mDif = max(mDif, abs(nums[i] - nums[i + 1]));
+        }
+        return mDif;
+    }
+};
+```
