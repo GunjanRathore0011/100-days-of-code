@@ -1,0 +1,44 @@
+# 🚀 Day 24 - 100 Days of Code
+
+## 📅 Date:  
+June 4, 2025
+
+---
+
+## ✅ Today's Progress:
+- Solved 1 Linked List problem:
+  - ✅ [328. Odd Even Linked List](https://leetcode.com/problems/odd-even-linked-list/)
+
+---
+
+## 🧠 What I Learned:
+- Rearranged a linked list to separate odd and even indexed nodes using two pointers.
+- Learned efficient in-place manipulation of nodes without extra space or new node creation.
+- Reinforced understanding of pointer reassignment and maintaining list structure.
+
+---
+
+## 🧩 Code Snippet:
+
+### 🔹 328. Odd Even Linked List
+```cpp
+class Solution {
+public:
+    ListNode* oddEvenList(ListNode* head) {
+        if (!head || !head->next) return head;
+
+        ListNode* odd = head;
+        ListNode* even = head->next;
+        ListNode* evenHead = even;
+
+        while (even && even->next) {
+            odd->next = even->next;
+            odd = odd->next;
+            even->next = odd->next;
+            even = even->next;
+        }
+
+        odd->next = evenHead;
+        return head;
+    }
+};
