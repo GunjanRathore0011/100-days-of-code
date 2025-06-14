@@ -1,0 +1,36 @@
+## 🔢 LeetCode 2566. Maximum Difference by Remapping a Digit
+
+**Problem:**  
+Given an integer `num`, you can choose a digit and replace **all occurrences** of that digit in the number with another digit to maximize and minimize its value. Return the **maximum difference** you can get.
+
+**Approach:**  
+- Convert the number to string for easy digit manipulation.
+- For `maxN`, replace the first non-'9' digit with `'9'` to get the maximum number.
+- For `minN`, replace the first digit with `'0'` to get the minimum number.
+- Use `std::replace()` and `stoi()` to process the values.
+
+**Code:**
+```cpp
+class Solution {
+public:
+    int minMaxDifference(int num) {
+        string str = to_string(num);
+        string maxN = str;
+        string minN = str;
+
+        // Replace first non-'9' digit with '9' for max value
+        for (int i = 0; i < maxN.size(); i++) {
+            if (maxN[i] != '9') {
+                char c = maxN[i];
+                replace(maxN.begin(), maxN.end(), c, '9');
+                break;
+            }
+        }
+
+        // Replace first digit with '0' for min value
+        char c = minN[0];
+        replace(minN.begin(), minN.end(), c, '0');
+
+        return stoi(maxN) - stoi(minN);
+    }
+};
