@@ -1,0 +1,35 @@
+# Day 27 of 100 Days of Code
+
+## Problem: [2016. Maximum Difference Between Increasing Elements](https://leetcode.com/problems/maximum-difference-between-increasing-elements/)
+
+### 🧠 Intuition
+The goal is to find the maximum difference between two elements `nums[j] - nums[i]` such that `i < j` and `nums[j] > nums[i]`. The key is to track the smallest value seen so far while iterating.
+
+### 🔍 Approach
+- Initialize a variable `sm` with the first element to keep track of the minimum element seen so far.
+- Iterate from index 1 to the end.
+- If `nums[i] > sm`, update `maxDif` with `nums[i] - sm`.
+- Else, update `sm` if `nums[i]` is smaller.
+
+### ⏱️ Complexity
+- **Time Complexity:** $$O(n)$$ — Single pass through the array.
+- **Space Complexity:** $$O(1)$$ — Constant space used.
+
+### ✅ Code
+```cpp
+class Solution {
+public:
+    int maximumDifference(vector<int>& nums) {
+        int sm = nums[0];
+        int maxDif = -1;
+        for(int i = 1; i < nums.size(); i++) {
+            if(nums[i] > sm) maxDif = max(maxDif, nums[i] - sm);
+            sm = min(sm, nums[i]);
+        }
+        return maxDif;
+    }
+};
+```
+
+### 📅 Date
+June 16, 2025
