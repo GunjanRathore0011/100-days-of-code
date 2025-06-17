@@ -1,0 +1,59 @@
+# 🚀 Day 28 of 100DaysOfCode
+
+Today I solved two interesting problems on LeetCode:
+
+## 🔹 70. Climbing Stairs
+**Problem:** Count the number of distinct ways to climb a staircase with `n` steps, taking 1 or 2 steps at a time.
+
+### ✅ Intuition
+This is a classic dynamic programming problem similar to the Fibonacci sequence. At each step, you can reach it either from the previous step or the step before that.
+
+### 🧠 Approach
+We use bottom-up dynamic programming. Initialize a `dp` array where `dp[i]` stores the number of ways to reach step `i`.
+
+### ⏱️ Complexity
+- **Time:** O(n)
+- **Space:** O(n)
+
+### 💻 Code
+```cpp
+class Solution {
+public:
+    int climbStairs(int n) {
+        vector<int> dp(n+1);
+        dp[0]=1; dp[1]=1;
+        for(int i=2;i<=n;i++){
+            dp[i]=dp[i-1]+dp[i-2];
+        }
+        return dp[n];
+    }
+};
+```
+
+---
+
+## 🔹 1903. Largest Odd Number in String
+**Problem:** Given a numeric string, return the largest-valued odd number that is a non-empty substring of the input.
+
+### ✅ Intuition
+The rightmost odd digit defines the largest odd number possible starting from index 0.
+
+### 🧠 Approach
+Traverse from the end of the string and return the first substring that ends with an odd digit.
+
+### ⏱️ Complexity
+- **Time:** O(n)
+- **Space:** O(1)
+
+### 💻 Code
+```cpp
+class Solution {
+public:
+    string largestOddNumber(string num) {
+        for(int i=num.size()-1;i>=0;i--){
+           if(num[i]%2!=0) return num.substr(0,i+1);
+        }
+        return "";
+    }
+};
+```
