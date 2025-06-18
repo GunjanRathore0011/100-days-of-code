@@ -49,3 +49,105 @@ public:
         return ans;
     }
 };
+
+
+
+📝 **Escape from theory prep — solved a few problems to stay productive.**
+
+## [49. Group Anagrams](https://leetcode.com/problems/group-anagrams/)
+
+### Intuition
+Used a hash map with sorted words as keys to group anagrams efficiently.
+
+### Approach
+Used a hash map with sorted words as keys to group anagrams efficiently.
+
+### Complexity
+- Time complexity: O(n * k log k), where n is the number of strings and k is the max string length
+- Space complexity: O(n) for storing grouped anagrams
+
+### Code (C++)
+```cpp
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        unordered_map<string, vector<string>> mp;
+        
+        for(auto x: strs){
+            string word = x;
+            sort(word.begin(), word.end());
+            mp[word].push_back(x);
+        }
+        vector<vector<string>> ans;
+        for(auto ele: mp){
+            ans.push_back(ele.second);
+        }
+        return ans;
+    }
+};
+```
+
+## [350. Intersection of Two Arrays II](https://leetcode.com/problems/intersection-of-two-arrays-ii/)
+
+### Intuition
+Used hash maps to count frequency of elements and find intersection.
+
+### Approach
+Used hash maps to count frequency of elements and find intersection.
+
+### Complexity
+- Time complexity: O(n + m), where n and m are the sizes of the two arrays
+- Space complexity: O(min(n, m))
+
+### Code (C++)
+```cpp
+class Solution {
+public:
+    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
+        unordered_map<int,int> mp;
+        vector<int> ans;
+
+        for(int i=0;i<nums1.size();i++){
+            mp[nums1[i]]++;
+        }
+        for(int num: nums2){
+            if(mp.count(num)>0){
+                if(mp[num]==0) continue;
+                ans.push_back(num);
+                mp[num]--;
+            }
+        }
+        return ans;
+    }
+};
+```
+
+## [2089. Find Target Indices After Sorting Array](https://leetcode.com/problems/find-target-indices-after-sorting-array/)
+
+### Intuition
+Sorted array and collected indices where the value equals the target.
+
+### Approach
+Sorted array and collected indices where the value equals the target.
+
+### Complexity
+- Time complexity: O(n log n) due to sorting
+- Space complexity: O(n) for storing indices
+
+### Code (C++)
+```cpp
+class Solution {
+public:
+    vector<int> targetIndices(vector<int>& nums, int target) {
+        sort(nums.begin(),nums.end());
+        vector<int> ans; 
+
+        for(int i=0;i<nums.size();i++){
+            if(nums[i]==target) ans.push_back(i);
+        }
+
+        return ans;
+    }
+};
+```
+
