@@ -1,0 +1,51 @@
+# Day 29 - LeetCode Progress Log
+
+## ✅ Problem 1: 2966. Divide Array Into Arrays With Max Difference
+
+### 🔗 Problem Link  
+[2966. Divide Array Into Arrays With Max Difference](https://leetcode.com/problems/divide-array-into-arrays-with-max-difference/)
+
+---
+
+### ✅ Intuition  
+We want to divide the array into groups of 3 such that the maximum difference in any group is less than or equal to `k`. Sorting helps make this greedy approach feasible.
+
+---
+
+### 🛠️ Approach  
+1. Sort the array to keep nearby numbers together.
+2. Iterate through the array and group elements in chunks of 3.
+3. Check the absolute difference between the first and third element in each group.
+4. If any group has a difference > k, return an empty array.
+5. Otherwise, return all valid groups.
+
+---
+
+### ⏱️ Complexity  
+- **Time Complexity:** `O(n log n)` – due to sorting  
+- **Space Complexity:** `O(n)` – to store grouped arrays
+
+---
+
+### 🧾 Code  
+```cpp
+class Solution {
+public:
+    vector<vector<int>> divideArray(vector<int>& nums, int k) {
+        vector<vector<int>> ans;
+        vector<int> v;
+        vector<vector<int>> empty;
+        sort(nums.begin(), nums.end());
+        for(int i = 0; i < nums.size(); i++) {
+            if(i % 3 == 0 && i != 0) {
+                if(abs(v[0] - v[2]) > k) return empty;
+                ans.push_back(v);
+                v.clear();
+            }
+            v.push_back(nums[i]);
+        }
+        ans.push_back(v);
+        if(abs(v[0] - v[2]) > k) return empty;
+        return ans;
+    }
+};
