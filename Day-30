@@ -1,0 +1,40 @@
+# 🚀 Day 30 - 100 Days of Code
+
+## 📅 Date:  
+June 19, 2025
+
+---
+
+## ✅ Today's Progress:
+- Solved 1 problem on LeetCode:
+  - ✅ [2294. Partition Array Such That Maximum Difference Is K](https://leetcode.com/problems/partition-array-such-that-maximum-difference-is-k/)
+
+---
+
+## 🧠 What I Learned:
+- Sorting the array first helps in grouping elements with minimal range.
+- Used two-pointer approach to group numbers such that the max difference in each group does not exceed `k`.
+- Maintained count of valid groups while scanning efficiently.
+
+---
+
+## 🧩 Code Snippet:
+
+### 🔹 2294. Partition Array Such That Maximum Difference Is K
+```cpp
+class Solution {
+public:
+    int partitionArray(vector<int>& nums, int k) {
+        if(nums.size()<2) return 1;
+        sort(nums.begin(),nums.end());
+        int cnt=0;
+        int i=0,j=0;
+        while(j<nums.size()){
+            while(j<nums.size() && nums[j]-nums[i]<=k) j++;
+            i=j;
+            cnt++;
+        }
+        return cnt;
+    }
+};
+```
