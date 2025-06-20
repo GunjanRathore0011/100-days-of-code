@@ -1,0 +1,38 @@
+# 🚀 Day 31 - 100 Days of Code
+
+## 📅 Date:
+June 20, 2025
+
+---
+
+## ✅ Today's Progress:
+- Solved 1 problem on LeetCode:
+  - ✅ [100. Same Tree](https://leetcode.com/problems/same-tree/)
+
+---
+
+## 🧠 What I Learned:
+- Practiced tree traversal using recursion.
+- Compared binary trees node-by-node to determine structural and value equality.
+
+---
+
+## 🧩 Code Snippet:
+
+### 🔹 100. Same Tree
+```cpp
+class Solution {
+public:
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        if(p==NULL && q!=NULL) return false;
+        if(p!=NULL && q==NULL) return false;
+        if(p==NULL && q==NULL) return true;
+        if(p->val!=q->val) return false;
+        bool lst = isSameTree(p->left, q->left);
+        if(lst == false) return false;
+        bool rst = isSameTree(p->right, q->right);
+        if(rst == false) return false;
+        return true;
+    }
+};
+```
