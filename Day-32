@@ -1,0 +1,72 @@
+# 🚀 Day 32 - 100 Days of Code
+
+## 📅 Date:
+June 25, 2025
+
+---
+
+## ✅ Today's Progress:
+- Solved 2 coding problems:
+  - ✅ [98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/)
+  - ✅ [566. Reshape the Matrix](https://leetcode.com/problems/reshape-the-matrix/)
+
+---
+
+## 🧠 What I Learned:
+- Practiced recursion and inorder traversal to validate BST properties.
+- Applied 2D array transformation logic for reshaping matrices.
+
+---
+
+## 🧩 Code Snippets:
+
+### 🔹 98. Validate Binary Search Tree
+```cpp
+class Solution {
+public:
+    void inorder(TreeNode* root,TreeNode* &prev,bool &flag){
+        if(root==NULL) return;
+        inorder(root->left,prev,flag);
+        if(prev!=NULL){
+            if(prev->val>=root->val){
+                flag=false;
+                return;
+            }
+        }
+        prev=root;
+        inorder(root->right,prev,flag);
+    }
+    bool isValidBST(TreeNode* root) {
+        TreeNode* prev=NULL;
+        bool flag=true;
+        inorder(root,prev,flag);
+        return flag;
+    }
+};
+```
+
+### 🔹 566. Reshape the Matrix
+```cpp
+class Solution {
+public:
+    vector<vector<int>> matrixReshape(vector<vector<int>>& mat, int r, int c) {
+        int m=mat.size();
+        int n=mat[0].size();
+
+        if((m==r && n==c)|| (m*n != r*c)) return mat;
+        vector<vector<int>> mt;
+        vector<int> v;
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(v.size()>=c) {
+                    mt.push_back(v);
+                    v.clear();
+                }
+                v.push_back(mat[i][j]);            
+            }
+        }
+        mt.push_back(v);
+        return mt;
+    }
+};
+```
