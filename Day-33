@@ -1,0 +1,88 @@
+# 🚀 Day 33 - 100 Days of Code
+
+## 📅 Date:  
+June 22, 2025
+
+---
+
+## ✅ Today's Progress:
+Solved 3 LeetCode problems:
+- 🔹 Q1. Check if Any Element Has Prime Frequency
+- 🔹 [2138. Divide a String Into Groups of Size k](https://leetcode.com/problems/divide-a-string-into-groups-of-size-k/)
+- 🔹 [108. Convert Sorted Array to Binary Search Tree](https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/)
+
+---
+
+## 🧠 What I Learned:
+- Implemented prime number check and used frequency maps to detect prime frequencies.
+- Handled string grouping logic including padding using a fill character.
+- Used divide-and-conquer strategy with recursion to build balanced binary search trees from sorted arrays.
+
+---
+
+## 🧩 Code Snippets:
+
+### 🔹 Q1. Check if Any Element Has Prime Frequency
+```cpp
+class Solution {
+public:
+    bool prime(int n){
+        if (n <= 1) return false;
+        for(int i=2; i<= sqrt(n); i++){
+            if(n%i==0) return false;
+        }
+        return true;
+    }
+    bool checkPrimeFrequency(vector<int>& nums) {
+        map<int,int> mp;
+        for(int num: nums) mp[num]++;
+        for(auto ele: mp){
+            if(prime(ele.second)) return true;
+        }
+        return false;
+    }
+};
+```
+
+### 🔹 2138. Divide a String Into Groups of Size k
+```cpp
+class Solution {
+public:
+    vector<string> divideString(string s, int k, char fill) {
+        vector<string> st;
+        string str="";
+        for(char c: s){
+            if(str.size()==k) {
+                st.push_back(str);
+                str="";
+            }
+            str+=c;
+        }
+        if(str.size()==k) {
+            st.push_back(str);
+        } else {
+            while(str.size()!=k) str+=fill;
+            st.push_back(str);
+        }
+        return st;
+    }
+};
+```
+
+### 🔹 108. Convert Sorted Array to Binary Search Tree
+```cpp
+class Solution {
+public:
+    TreeNode* BST(vector<int>& v,int lo,int hi){
+        if(lo>hi) return NULL;
+        int mid=lo+(hi-lo)/2;
+        TreeNode* root = new TreeNode(v[mid]);  
+        root->left=BST(v,lo,mid-1);
+        root->right=BST(v,mid+1,hi);
+        return root;
+    }
+    TreeNode* sortedArrayToBST(vector<int>& nums) {
+        return BST(nums,0,nums.size()-1);
+    }
+};
+```
