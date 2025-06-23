@@ -1,0 +1,33 @@
+# 🚀 Day 34 - 100 Days of Code
+
+## 📅 Date:  
+July 3, 2025
+
+---
+
+## ✅ Today's Progress:
+- Solved 1 problem on LeetCode:
+  - ✅ [1832. Check if the Sentence Is Pangram](https://leetcode.com/problems/check-if-the-sentence-is-pangram/)
+
+---
+
+## 🧠 What I Learned:
+- Leveraged a `map` to track characters and validated presence of all 26 lowercase letters.
+- Basic string processing and frequency mapping skills refreshed.
+
+---
+
+## 🧩 Code Snippet:
+
+### 🔹 1832. Check if the Sentence Is Pangram
+```cpp
+class Solution {
+public:
+    bool checkIfPangram(string sentence) {
+        map<int, int> mp;
+        for (char c : sentence) {
+            mp[c]++;
+        }
+        return mp.size() == 26;
+    }
+};
