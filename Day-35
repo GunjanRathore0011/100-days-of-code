@@ -1,0 +1,40 @@
+# 🚀 Day 35 - 100 Days of Code
+
+## 📅 Date:  
+July 4, 2025
+
+---
+
+## ✅ Today's Progress:
+- Solved 1 problem on LeetCode:
+  - ✅ [2200. Find All K-Distant Indices in an Array](https://leetcode.com/problems/find-all-k-distant-indices-in-an-array/)
+
+---
+
+## 🧠 What I Learned:
+- Iterated over indices with value equal to `key` and collected all positions within distance `k`.
+- Used absolute difference and `find()` to avoid duplicates in the result vector.
+- Reinforced brute-force pattern combined with simple set-like filtering.
+
+---
+
+## 🧩 Code Snippet:
+
+### 🔹 2200. Find All K-Distant Indices in an Array
+```cpp
+class Solution {
+public:
+    vector<int> findKDistantIndices(vector<int>& nums, int key, int k) {
+        vector<int> v;
+        for(int j = 0; j < nums.size(); j++) {
+            if(nums[j] == key) {
+                for(int i = 0; i < nums.size(); i++) {
+                    if(abs(i - j) <= k && find(v.begin(), v.end(), i) == v.end()) {
+                        v.push_back(i);
+                    }
+                }
+            }
+        }
+        return v;
+    }
+};
