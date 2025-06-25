@@ -1,0 +1,72 @@
+# 🚀 Day 36 - 100 Days of Code
+
+## 📅 Date:  
+July 5, 2025
+
+---
+
+## ✅ Today's Progress:
+Solved two LeetCode problems:
+- ✅ [38. Count and Say](https://leetcode.com/problems/count-and-say/)
+- ✅ [896. Monotonic Array](https://leetcode.com/problems/monotonic-array/)
+
+---
+
+## 🧠 What I Learned:
+- Implemented **string pattern generation** for number sequences in "Count and Say" using frequency counting logic.
+- Efficiently detected monotonic trends in arrays, including handling edge cases with repeated values in "Monotonic Array".
+
+---
+
+## 🧩 Code Snippets:
+
+### 🔹 38. Count and Say & 🔹 896. Monotonic Array (Combined)
+```cpp
+// 38. Count and Say
+class Solution {
+public:
+    string countAndSay(int n) {
+        if(n==1) return "1";
+
+        string s="1";
+        while (--n) {
+            string nSt = "";
+            int count = 1;
+            char a = s[0];
+            for (int i = 1; i < s.size(); i++) {
+                if (a == s[i]) {
+                    count++;
+                } else {
+                    nSt += to_string(count) + a;
+                    count = 1;
+                    a = s[i];
+                }
+            }
+            nSt += to_string(count) + s[s.size() - 1];
+            s = nSt;
+        }
+        return s;
+    }
+};
+
+// 896. Monotonic Array
+class Solution {
+public:
+    bool isMonotonic(vector<int>& nums) {
+        bool flag = true;
+        int j = 0;
+        while (j < nums.size() - 1 && nums[j] == nums[j + 1]) j++;
+
+        if (j == nums.size() - 1) return true;
+        if (nums[j] > nums[j + 1]) flag = false;
+
+        for (int i = j; i < nums.size() - 1; i++) {
+            if (flag) {
+                if (nums[i] > nums[i + 1]) return false;
+            } else {
+                if (nums[i] < nums[i + 1]) return false;
+            }
+        }
+        return true;
+    }
+};
