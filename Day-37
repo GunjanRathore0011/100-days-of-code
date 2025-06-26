@@ -1,0 +1,91 @@
+# 🚀 Day 37 - 100 Days of Code
+
+## 📅 Date:  
+June 26, 2025
+
+---
+
+## ✅ Today's Progress:
+- Solved 3 coding problems on LeetCode:
+  - ✅ [345. Reverse Vowels of a String](https://leetcode.com/problems/reverse-vowels-of-a-string/)
+  - ✅ [905. Sort Array By Parity](https://leetcode.com/problems/sort-array-by-parity/)
+  - ✅ [575. Distribute Candies](https://leetcode.com/problems/distribute-candies/)
+
+---
+
+## 🧠 What I Learned:
+- Applied two-pointer technique for targeted in-place swapping of characters.
+- Used modular checks to reorganize arrays efficiently.
+- Leveraged `set` data structure to count unique types with optimal space.
+
+---
+
+## 🧩 Code Snippets:
+
+### 🔹 345. Reverse Vowels of a String
+```cpp
+class Solution {
+public:
+    bool isVowel(char c) {
+        return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' ||
+               c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U';
+    }
+    string reverseVowels(string s) {
+        int i = 0;
+        int j = s.size() - 1;
+
+        while (i < j) {
+            if (isVowel(s[i]) && isVowel(s[j])) {
+                swap(s[i], s[j]);
+                i++;
+                j--;
+            }
+            else if (isVowel(s[i])) j--;
+            else if (isVowel(s[j])) i++;
+            else {
+                i++;
+                j--;
+            }
+        }
+        return s;
+    }
+};
+```
+
+### 🔹 905. Sort Array By Parity
+```cpp
+class Solution {
+public:
+    vector<int> sortArrayByParity(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> ans;
+        for(int i = 0; i < n; i++) {
+            if(nums[i] % 2 == 0) ans.push_back(nums[i]);
+        }
+        for(int i = 0; i < n; i++) {
+            if(nums[i] % 2 != 0) ans.push_back(nums[i]);
+        }
+        return ans;
+    }
+};
+```
+
+### 🔹 575. Distribute Candies
+```cpp
+class Solution {
+public:
+    int distributeCandies(vector<int>& candyType) {
+        set<int> s;
+        int n = candyType.size();
+        for(int i = 0; i < n; i++) {
+            s.insert(candyType[i]);
+        }
+        return min((int)s.size(), n / 2);
+    }
+};
+```
+
+---
+
+## 🔚 Reflections:
+Back to the grind after exams—easing in with clean logic and satisfying submissions 😌
