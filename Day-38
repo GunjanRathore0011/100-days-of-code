@@ -1,0 +1,93 @@
+# 🚀 Day 38 - 100 Days of Code
+
+## 📅 Date:  
+June 27, 2025
+
+---
+
+## ✅ Today's Progress:
+Solved 3 logical coding problems on LeetCode:
+- ✅ [1160. Find Words That Can Be Formed by Characters](https://leetcode.com/problems/find-words-that-can-be-formed-by-characters/)
+- ✅ [1287. Element Appearing More Than 25% In Sorted Array](https://leetcode.com/problems/element-appearing-more-than-25-in-sorted-array/)
+- ✅ [944. Delete Columns to Make Sorted](https://leetcode.com/problems/delete-columns-to-make-sorted/)
+
+---
+
+## 🧠 What I Learned:
+- Practiced validating character usage via frequency maps.
+- Used counting logic to identify dominant elements in sorted arrays.
+- Implemented column-wise lexicographical checks in string matrices.
+
+---
+
+## 🧩 Code Snippets:
+
+### 🔹 1160. Find Words That Can Be Formed by Characters
+```cpp
+class Solution {
+public:
+    int countCharacters(vector<string>& words, string chars) {
+        int cnt = 0;
+        unordered_map<char,int> mp_original;
+        for(char ch: chars) mp_original[ch]++;
+
+        for(string word : words){
+            unordered_map<char,int> mp = mp_original;
+            bool flag = true;
+            for(char c : word){
+                if(mp.find(c) != mp.end() && mp[c] > 0) {
+                    mp[c]--;
+                }
+                else {
+                    flag = false;
+                    break;
+                }
+            }
+            if(flag) cnt += word.size();
+        }
+        return cnt;
+    }
+};
+```
+
+### 🔹 1287. Element Appearing More Than 25% In Sorted Array
+```cpp
+class Solution {
+public:
+    int findSpecialInteger(vector<int>& arr) {
+        int cnt=1;
+        int per=(arr.size()/4);
+
+        for(int i=0;i<arr.size()-1;i++){
+            if(arr[i]==arr[i+1]) cnt++;
+            else cnt=1;
+            if(cnt > per) return arr[i];
+        }
+        return arr[0];
+    }
+};
+```
+
+### 🔹 944. Delete Columns to Make Sorted
+```cpp
+class Solution {
+public:
+    int minDeletionSize(vector<string>& strs) {
+        int n=strs.size();
+        int m=strs[0].size();
+        int cnt=0;
+        set<int> s;
+
+        for(int i=1;i<n;i++){
+            cnt=0;
+            for(int j=0;j<m;j++){
+                if(strs[i][j]<strs[i-1][j]) {
+                    cnt++;
+                    s.insert(j);
+                }
+            }
+        }
+        return s.size();
+    }
+};
+```
