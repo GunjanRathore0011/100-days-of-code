@@ -1,0 +1,40 @@
+# Day 40 - LeetCode Solutions
+
+## ✅ Problems Solved:
+1. [110. Balanced Binary Tree](https://leetcode.com/problems/balanced-binary-tree/)
+2. [3597. Partition String](https://leetcode.com/problems/partition-string/)
+
+---
+
+## 1️⃣ Balanced Binary Tree
+
+### 🔍 Intuition:
+A binary tree is balanced if, for every node, the difference between heights of its left and right subtree is not more than 1.
+
+### 💡 Approach:
+- Use a recursive DFS function to calculate height of subtrees.
+- If any subtree returns `-1`, it means it's not balanced.
+- If all subtrees are balanced, return actual height using `1 + max(left, right)`.
+
+### ⏱️ Complexity:
+- Time: `O(n)` — where n is the number of nodes.
+- Space: `O(h)` — recursion stack, h is the height of the tree.
+
+### ✅ Code:
+```cpp
+class Solution {
+public:
+    int balance(TreeNode* root){
+        if(root == NULL) return 0;
+        int lh = balance(root->left);
+        int rh = balance(root->right);
+        if(abs(lh - rh) > 1) return -1;
+        if(lh == -1 || rh == -1) return -1;
+        return 1 + max(balance(root->left), balance(root->right));
+    }
+
+    bool isBalanced(TreeNode* root) {
+        int ans = balance(root);
+        return ans != -1;
+    }
+};
