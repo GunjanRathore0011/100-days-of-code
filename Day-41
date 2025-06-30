@@ -1,0 +1,171 @@
+
+# Day 41 of #100DaysOfCode
+
+Solved 6 problems on LeetCode:
+
+## Problems:
+
+### 1. [594. Longest Harmonious Subsequence](https://leetcode.com/problems/longest-harmonious-subsequence)
+**Approach:**
+- Used a hashmap to count the frequency of elements.
+- For each element, checked if its consecutive number exists, and computed the possible harmonious subsequence.
+
+```cpp
+class Solution {
+public:
+    int findLHS(vector<int>& nums) {
+        int mLen=0;
+        unordered_map<int,int> mp;
+        for(int num: nums) mp[num]++;
+        for(auto ele: mp){
+            int num=ele.first;
+            int freq=ele.second;
+            if(mp.count(num+1)){
+                mLen=max(mLen,(freq+ mp[num+1]));
+            }
+        }
+        return mLen;
+    }
+};
+```
+
+---
+
+### 2. [451. Sort Characters By Frequency](https://leetcode.com/problems/sort-characters-by-frequency)
+**Approach:**
+- Count frequency of each character using a map.
+- Use max-heap (priority queue) to sort characters by frequency.
+
+```cpp
+class Solution {
+public:
+    string frequencySort(string s) {
+        map<char,int> mp;
+        priority_queue<pair<int,char>> pq;
+        for(char c: s) mp[c]++;
+        string st="";
+        for(auto ele: mp){
+            pq.push({ele.second,ele.first});
+        }
+        while(!pq.empty()){
+            pair<int,char> p=pq.top();
+            st+=string(p.first,p.second);
+            pq.pop();
+        }
+        return st;
+    }
+};
+```
+
+---
+
+### 3. [1781. Sum of Beauty of All Substrings](https://leetcode.com/problems/sum-of-beauty-of-all-substrings)
+**Approach:**
+- Iterate through all substrings.
+- Maintain frequency of characters.
+- For each substring, compute beauty = max frequency - min frequency.
+
+```cpp
+class Solution {
+public:
+    int getMaxCount(vector<int> v){
+        int maxCount=INT_MIN;
+        for(int i=0;i<26;i++) maxCount=max(maxCount,v[i]);
+        return maxCount;
+    }
+    int getMinCount(vector<int> v){
+        int minCount=INT_MAX;
+        for(int i=0;i<26;i++){
+            if(v[i]!=0) minCount=min(minCount,v[i]);
+        }
+        return minCount;
+    }
+    int beautySum(string s) {
+        int sum=0;
+        for(int i=0;i<s.size();i++){
+            vector<int> freq(26, 0);
+            for(int j=i;j<s.size();j++){
+                freq[s[j]-'a']++;
+                sum+=getMaxCount(freq)-getMinCount(freq);
+            }
+        }
+        return sum;
+    }
+};
+```
+
+---
+
+### 4. [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree)
+**Approach:**
+- Use DFS to calculate height and diameter at each node.
+- Keep track of maximum diameter found during traversal.
+
+```cpp
+class Solution {
+public:
+    int mDia=0;
+    int depth(TreeNode* root){
+        if(root==NULL) return 0;
+        return 1+max(depth(root->left),depth(root->right));
+    }
+    int diameterOfBinaryTree(TreeNode* root) {
+        if(root==NULL) return 0;
+        int dia= depth(root->left)+ depth(root->right);
+        mDia=max(mDia,dia);
+        diameterOfBinaryTree(root->left);
+        diameterOfBinaryTree(root->right);
+        return mDia;
+    }
+};
+```
+
+---
+
+### 5. [701. Insert into a Binary Search Tree](https://leetcode.com/problems/insert-into-a-binary-search-tree)
+**Approach:**
+- Recursive BST insertion.
+
+```cpp
+class Solution {
+public:
+    TreeNode* insertIntoBST(TreeNode* root, int val) {
+        if(root==NULL) return new TreeNode(val);
+        if(root->val<val) root->right=insertIntoBST(root->right,val);
+        else root->left=insertIntoBST(root->left,val);
+        return root;
+    }
+};
+```
+
+---
+
+### 6. [104. Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree)
+**Approach:**
+- Simple DFS-based height calculation.
+
+```cpp
+class Solution {
+public:
+    int maxDepth(TreeNode* root) {
+        if(root==NULL) return 0;
+        return 1+ max( maxDepth(root->left) , maxDepth(root->right ));
+    }
+};
+```
+
+---
+
+## Tweet:
+```markdown
+Day 41 of #100DaysOfCode
+Solved 6 #LeetCode problems 🧠🌳
+🔹 Longest Harmonious Subsequence
+🔹 Frequency Sort
+🔹 Beauty Sum of Substrings
+🔹 Diameter of Binary Tree
+🔹 Insert into BST
+🔹 Max Depth of Binary Tree
+Practiced arrays, strings, and trees! 🌿
+#CPlusPlus #CodingChallenge #buildinpublic
+```
