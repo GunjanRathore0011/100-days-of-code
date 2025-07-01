@@ -1,0 +1,197 @@
+# Day 42 of #100DaysOfCode
+
+Solved 6 LeetCode problems involving binary trees and strings.
+
+## Problems:
+
+### 1. [103. Binary Tree Zigzag Level Order Traversal](https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal)
+
+**Approach:**
+
+* Standard level order traversal using a queue.
+* Used a boolean flag to alternate between left-to-right and right-to-left traversal at each level.
+
+```cpp
+class Solution {
+public:
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        vector<vector<int>> v;
+        if(root==NULL) return v;
+
+        queue<TreeNode*> q;
+        q.push(root);
+        bool flag=false;
+
+        while(!q.empty()){
+            int n=q.size();
+            vector<int> level;
+            for(int i=0;i<n;i++){
+                TreeNode* temp=q.front();
+                q.pop();
+                if(temp->left) q.push(temp->left);
+                if(temp->right) q.push(temp->right);
+                level.push_back(temp->val);
+            }
+            if(flag){
+                flag=false;
+                reverse(level.begin(),level.end());
+            }
+            else flag=true;
+            v.push_back(level);
+        }
+        return v;
+    }
+};
+```
+
+---
+
+### 2. [99. Recover Binary Search Tree](https://leetcode.com/problems/recover-binary-search-tree)
+
+**Approach:**
+
+* Brute force method: Perform inorder traversal to collect node values.
+* Sort the collected values and reconstruct the tree by performing another inorder traversal.
+
+```cpp
+class Solution {
+public:
+    void inorder(TreeNode* root,vector<int>& v){
+        if(!root) return;
+        inorder(root->left,v);
+        v.push_back(root->val);
+        inorder(root->right,v);
+    }
+    void inorderRe(TreeNode* root,int& i,vector<int>& v){
+        if (!root) return;
+        inorderRe(root->left, i, v);
+        root->val = v[i++];
+        inorderRe(root->right, i, v);
+    }
+    void recoverTree(TreeNode* root) {
+        vector<int> v;
+        inorder(root,v);
+        sort(v.begin(),v.end());
+        int i=0;
+        inorderRe(root,i,v);
+    }
+};
+```
+
+---
+
+### 3. [199. Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view)
+
+**Approach:**
+
+* BFS traversal and take the last element from each level as the right view.
+
+```cpp
+class Solution {
+public:
+    vector<int> rightSideView(TreeNode* root) {
+        if(root==NULL) return {};
+        vector<int> ans;
+        queue<TreeNode*> q;
+        q.push(root);
+
+        while(!q.empty()){
+            int n=q.size();
+            int value;
+            for(int i=0;i<n;i++){
+                TreeNode* temp=q.front();
+                q.pop();
+                if(temp->left) q.push(temp->left);
+                if(temp->right) q.push(temp->right);
+                value=temp->val;
+            }
+            ans.push_back(value);
+        }
+        return ans;
+    }
+};
+```
+
+---
+
+### 4. [226. Invert Binary Tree](https://leetcode.com/problems/invert-binary-tree)
+
+**Approach:**
+
+* Use recursion to swap left and right children of each node.
+
+```cpp
+class Solution {
+public:
+    TreeNode* helper(TreeNode* root){
+        if(root==NULL) return root;
+        TreeNode* temp=root->right;
+        root->right=helper(root->left);
+        root->left=helper(temp);
+        return root;
+    }
+
+    TreeNode* invertTree(TreeNode* root) {
+        return helper(root);
+    }
+};
+```
+
+---
+
+### 5. [796. Rotate String](https://leetcode.com/problems/rotate-string)
+
+**Approach:**
+
+* Double the original string and check if the goal string exists as a substring.
+
+```cpp
+class Solution {
+public:
+    bool rotateString(string s, string goal) {
+        if(s.size()!=goal.size()) return false;
+        s=s+s;
+        if(s.find(goal)!=string::npos) return true;
+        return false;
+    }
+};
+```
+
+---
+
+### 6. [3330. Find the Original Typed String I](https://leetcode.com/problems/find-the-original-typed-string-i/)
+
+**Approach:**
+
+* Count adjacent repeated characters.
+
+```cpp
+class Solution {
+public:
+    int possibleStringCount(string word) {
+        int cnt=1;
+        for(int i=0;i<word.size()-1;i++){
+            if(word[i]==word[i+1]) cnt++;
+        }
+        return cnt;
+    }
+};
+```
+
+---
+
+## Tweet:
+
+```markdown
+Day 42 of #100DaysOfCode  ✅
+Solved 6 LeetCode problems 🔍
+🔹 Binary Tree Zigzag Traversal
+🔹 Recover BST
+🔹 Right Side View
+🔹 Invert Binary Tree
+🔹 Rotate String
+🔹 Typed String Check (POTD)
+
+Explored Binary Tree variations & string puzzles 🌲📚
+#LeetCode #CPlusPlus #buildinpublic #CodingChallenge
+```
