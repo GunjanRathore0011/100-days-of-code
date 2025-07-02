@@ -1,0 +1,105 @@
+# Day 43 of #100DaysOfCode
+
+Solved 4 Binary Search Tree problems on LeetCode and GFG.
+
+## Problems:
+
+### 1. [230. Kth Smallest Element in a BST](https://leetcode.com/problems/kth-smallest-element-in-a-bst)
+**Approach:**
+- Performed in-order traversal to fetch nodes in sorted order.
+- Maintained a counter to track the k-th element.
+
+```cpp
+class Solution {
+public:
+    int inorder(TreeNode* root, int& i, int k) {
+        if (!root) return -1;
+        int left = inorder(root->left, i, k);
+        if (left != -1) return left; 
+        i++;
+        if (i == k) return root->val;
+        return inorder(root->right, i, k);
+    }
+
+    int kthSmallest(TreeNode* root, int k) {
+        int i = 0;
+        return inorder(root, i, k);
+    }
+};
+```
+
+---
+
+### 2. [700. Search in a Binary Search Tree](https://leetcode.com/problems/search-in-a-binary-search-tree)
+**Approach:**
+- Applied standard BST recursive search logic.
+
+```cpp
+class Solution {
+public:
+    TreeNode* searchBST(TreeNode* root, int val) {
+        if(root==NULL || root->val==val) return root;
+        if(root->val<val) return searchBST(root->right,val);
+        return searchBST(root->left,val);
+    }
+};
+```
+
+---
+
+### 3. [Ceil in BST – GFG](https://www.geeksforgeeks.org/problems/implementing-ceil-in-bst/1)
+**Approach:**
+- Traversed tree and updated ceil when a value >= input was found.
+
+```cpp
+int findCeil(Node* root, int input) {
+    int ceil = -1;
+    while (root) {
+        if (root->data == input) return input;
+        if (root->data < input) root = root->right;
+        else {
+            ceil = root->data;
+            root = root->left;
+        }
+    }
+    return ceil;
+}
+```
+
+---
+
+### 4. [Floor in BST – GFG](https://www.geeksforgeeks.org/problems/floor-in-bst/1)
+**Approach:**
+- Traversed the BST and updated floor if current node's value <= input.
+
+```cpp
+class Solution {
+public:
+    int floor(Node* root, int x) {
+        int floor = -1;
+        while (root) {
+            if (root->data == x) return x;
+            if (root->data > x) root = root->left;
+            else {
+                floor = root->data;
+                root = root->right;
+            }
+        }
+        return floor;
+    }
+};
+```
+
+---
+
+## Tweet:
+```markdown
+Day 43 of #100DaysOfCode
+Solved 4 BST problems 🧠🌳
+🔹 Kth Smallest in BST
+🔹 Search in BST
+🔹 Ceil in BST
+🔹 Floor in BST
+Back to basics with some clean BST logic! ✅
+#LeetCode #GFG #CPlusPlus #CodingChallenge #buildinpublic
+```
