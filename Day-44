@@ -1,0 +1,154 @@
+
+# Day 44 of #100DaysOfCode
+
+Solved 4 problems on LeetCode:
+
+## Problems:
+
+### 1. [3304. Find the K-th Character in String Game I](https://leetcode.com/problems/find-the-k-th-character-in-string-game-i)
+**Approach:**
+- Start with a string `"a"`.
+- For each round, increment each character and append the resulting string.
+- Continue until the string is at least of length `k`.
+- Return the k-th character.
+
+```cpp
+class Solution {
+public:
+    char kthCharacter(int k) {
+        string word="a";
+        while(word.size()<k){
+            string gS="";
+            for(char c: word){
+                gS+=++c;
+            }
+            word+=gS;
+        }
+        return word[k-1];
+    }
+};
+```
+
+---
+
+### 2. [450. Delete Node in a BST](https://leetcode.com/problems/delete-node-in-a-bst)
+**Approach:**
+- Handle three deletion scenarios:
+  - Node has no children.
+  - Node has one child.
+  - Node has two children: find rightmost of left subtree to replace.
+- Use recursion and helper functions.
+
+```cpp
+class Solution {
+public:
+    TreeNode* helper(TreeNode* root){
+        if(root->left==NULL) return root->right;
+        if(root->right==NULL) return root->left;
+        TreeNode* rightChild=root->right;
+        TreeNode* leftLastRight=findLastRight(root->left);
+        leftLastRight->right=rightChild;
+        return root->left;
+    }
+    TreeNode* findLastRight(TreeNode* root){
+        if(root->right==NULL) return root;
+        return findLastRight(root->right);
+    }
+    TreeNode* deleteNode(TreeNode* root, int key) {
+        if(root==NULL ) return root;
+        if(root->val==key){
+            return helper(root);
+        }    
+        TreeNode* dummy=root;
+        while(root){
+            if(root->val> key){
+                if(root->left && root->left->val==key){
+                    root->left=helper(root->left);
+                    break;
+                }
+                else root=root->left;
+            }
+            else{
+                if(root->right && root->right->val==key){
+                    root->right=helper(root->right);
+                    break;
+                }
+                else root=root->right;
+            }
+        }
+        return dummy;
+    }
+};
+```
+
+---
+
+### 3. [215. Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array)
+**Approach:**
+- Use a max heap (priority queue).
+- Push all elements and pop k-1 elements to get the k-th largest.
+
+```cpp
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        priority_queue<int> pq;
+        for(int num: nums){
+            pq.push(num);
+        }
+        while(--k){
+            pq.pop();
+        }
+        return pq.top();
+    }
+};
+```
+
+---
+
+### 4. [1008. Construct Binary Search Tree from Preorder Traversal](https://leetcode.com/problems/construct-binary-search-tree-from-preorder-traversal)
+**Approach:**
+- Use brute force insertion method into BST for each element in preorder traversal.
+
+```cpp
+class Solution {
+public:
+    TreeNode* insertIntoBST(TreeNode* root, int val) {
+        if(root==NULL) return new TreeNode(val);
+        else if(root->val>val){
+            if(root->left==NULL){
+                root->left=new TreeNode(val);
+            }
+            else insertIntoBST(root->left,val);
+        }
+        else{
+            if(root->right==NULL){
+                root->right=new TreeNode(val);
+            }
+            else insertIntoBST(root->right,val);
+        }
+        return root;
+    }
+    TreeNode* bstFromPreorder(vector<int>& preorder) {
+        TreeNode* temp=NULL;
+        for(int i=0;i<preorder.size();i++){
+            temp=insertIntoBST(temp,preorder[i]);
+        }
+        return temp;
+    }
+};
+```
+
+---
+
+## Tweet:
+```markdown
+Day 44 of #100DaysOfCode 💻
+Solved 4 #LeetCode problems:
+🔹 3304 Find K-th Character in Game I
+🔹 450 Delete Node in BST
+🔹 215 Kth Largest Element in Array
+🔹 1008 BST from Preorder Traversal
+More BST and heap practice! 🌳📊
+#CPlusPlus #CodingChallenge #buildinpublic #DevCommunity
+```
