@@ -115,6 +115,45 @@ public:
     }
 };
 ```
+# LeetCode Problem Log
+
+### Problem: [3307. Find the K-th Character in String Game II](https://leetcode.com/problems/find-the-k-th-character-in-string-game-ii)
+
+**Approach:**
+- The problem involves simulating operations that double the size of a string, where the doubling includes transformations (e.g., character shifting).
+- Instead of building the actual string, which would be memory-intensive, we use mathematical calculations to trace the k-th character's origin.
+- We keep track of how many transformations (shifts) were applied on the path to the k-th character.
+
+```cpp
+class Solution {
+public:
+    char kthCharacter(long long k, vector<int>& op) {
+        int idx=-1;
+        long long val=1;
+        int shift=0;
+        while(k>=val){
+            val= (long long) val*2;
+            idx++;
+        }
+        for(int i=idx;i>=0;i--){
+            val=val/2;
+            if(k>val){
+                // second half;
+                k-=val;
+                if(op[i]==1) shift++;
+            }
+        }
+        return char('a'+(shift%26));
+    }
+};
+```
+
+---
+
+### 💬 Quote of the Day:
+> "When you reach the peak, you realize the mountain wasn't the obstacle — you were."
+
+---
 
 ---
 
