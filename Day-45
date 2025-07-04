@@ -1,0 +1,131 @@
+# Day 45 of #100DaysOfCode
+
+Solved 4 problems on LeetCode:
+
+## Problems:
+
+### 1. [151. Reverse Words in a String](https://leetcode.com/problems/reverse-words-in-a-string)
+**Approach:**
+- Used `stringstream` to extract words.
+- Stored words in a vector, reversed the vector, and joined them with spaces.
+
+```cpp
+class Solution {
+public:
+    string reverseWords(string s) {
+        stringstream ss(s);
+        string word;
+        vector<string> v;
+        while(ss >> word) {
+            v.push_back(word);
+        }
+        reverse(v.begin(), v.end());
+        string ans = "";
+        for(int i = 0; i < v.size(); i++) {
+            ans += v[i];
+            if(i < v.size() - 1) ans += " ";
+        }
+        return ans;
+    }
+};
+```
+
+---
+
+### 2. [5. Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring)
+**Approach:**
+- Checked both odd and even length palindromes centered at each character.
+- Used a two-pointer approach to expand around center.
+
+```cpp
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        if (s.size() <= 1) return s;
+        string longP = "";
+        for (int i = 0; i < s.size(); i++) {
+            int low = i, high = i;
+            while (low >= 0 && high < s.size() && s[low] == s[high]) {
+                low--;
+                high++;
+            }
+            string palind = s.substr(low + 1, high - low - 1);
+            if (palind.size() > longP.size()) longP = palind;
+            low = i - 1;
+            high = i;
+            while (low >= 0 && high < s.size() && s[low] == s[high]) {
+                low--;
+                high++;
+            }
+            palind = s.substr(low + 1, high - low - 1);
+            if (palind.size() > longP.size()) longP = palind;
+        }
+        return longP;
+    }
+};
+```
+
+---
+
+### 3. [1614. Maximum Nesting Depth of the Parentheses](https://leetcode.com/problems/maximum-nesting-depth-of-the-parentheses)
+**Approach:**
+- Used a counter to track current and maximum depth of nested parentheses.
+
+```cpp
+class Solution {
+public:
+    int maxDepth(string s) {
+        int mD = 0, cnt = 0;
+        for (char c : s) {
+            if (c == '(') {
+                cnt++;
+                mD = max(mD, cnt);
+            } else if (c == ')') cnt--;
+        }
+        return mD;
+    }
+};
+```
+
+---
+
+### 4. [13. Roman to Integer](https://leetcode.com/problems/roman-to-integer)
+**Approach:**
+- Used a hashmap to map Roman numerals to integers.
+- Traversed the string and subtracted if a smaller numeral came before a larger one.
+
+```cpp
+class Solution {
+public:
+    int romanToInt(string s) {
+        unordered_map<char, int> roman = {
+            {'I', 1}, {'V', 5}, {'X', 10}, {'L', 50},
+            {'C', 100}, {'D', 500}, {'M', 1000}
+        };
+        int num = 0;
+        for (int i = 0; i < s.length(); i++) {
+            int value = roman[s[i]];
+            if (i > 0 && value > roman[s[i - 1]]) {
+                num += value - 2 * roman[s[i - 1]];
+            } else {
+                num += value;
+            }
+        }
+        return num;
+    }
+};
+```
+
+---
+
+## Tweet:
+```markdown
+Day 45 of #100DaysOfCode  
+Solved 4 problems on #LeetCode ✨  
+🔹 Reverse Words in a String  
+🔹 Longest Palindromic Substring  
+🔹 Max Nesting Depth of Parentheses  
+🔹 Roman to Integer  
+Enjoyed string manipulation & logical patterns today!  
+#CPlusPlus #CodingChallenge #buildinpublic #DevCommunity
+```
