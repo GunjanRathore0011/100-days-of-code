@@ -1,0 +1,142 @@
+# Day 46 of #100DaysOfCode
+
+Solved 5 problems on LeetCode:
+
+## Problems:
+
+### 1. [1394. Find Lucky Integer in an Array](https://leetcode.com/problems/find-lucky-integer-in-an-array)
+**Approach:**
+- Count frequencies of each number.
+- Check if number == its frequency and track the max.
+
+```cpp
+class Solution {
+public:
+    int findLucky(vector<int>& arr) {
+        int luckyN=-1;
+        unordered_map<int,int> mp;
+        for(int num: arr) mp[num]++;
+        for(auto ele: mp){
+            if(ele.second==ele.first) luckyN=max(luckyN,ele.first);
+        }
+        return luckyN;
+    }
+};
+```
+
+---
+
+### 2. [106. Construct Binary Tree from Inorder and Postorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal)
+**Approach:**
+- Recursively build tree using inorder and postorder segments.
+
+```cpp
+class Solution {
+public:
+    TreeNode* build(vector<int>& in,int inlo,int inhi, vector<int>& post,int postlo,int posthi){
+        if(inlo>inhi) return NULL;
+        TreeNode* root=new TreeNode(post[posthi]);
+        if(inlo==inhi) return root;
+        int i=inlo;
+        while(i<=inhi){
+            if(in[i]==post[posthi]) break;
+            i++;
+        }
+        int lC=i-inlo;
+        int rC=inhi-i;
+        root->left=build(in,inlo,i-1,post,postlo,postlo+lC-1);
+        root->right=build(in, i+1, inhi,post, posthi-rC, posthi-1);
+        return root;
+    }
+    TreeNode* buildTree(vector<int>& in, vector<int>& post) {
+        int n=in.size();
+        return build(in,0,n-1,post,0,n-1);
+    }
+};
+```
+
+---
+
+### 3. [105. Construct Binary Tree from Preorder and Inorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal)
+**Approach:**
+- Build tree recursively using preorder and inorder segments.
+
+```cpp
+class Solution {
+public:
+    TreeNode* build(vector<int>& pre,int prelo,int prehi, vector<int>& in,int inlo,int inhi) {
+        if(inlo>inhi) return NULL;
+        TreeNode* root=new TreeNode(pre[prelo]);
+        if(prelo==prehi) return root;
+        int i=inlo;
+        while(i<=inhi){
+            if(in[i]==pre[prelo]) break;
+            i++;
+        }
+        int leftCount=i-inlo;
+        int rightCount=inhi-i;
+        root->left=build(pre,prelo+1,prelo+leftCount,in,inlo,inlo+leftCount-1);
+        root->right=build(pre,prehi-rightCount+1,prehi,in ,i+1,inhi);
+        return root;
+    }
+    TreeNode* buildTree(vector<int>& pre, vector<int>& in) {
+        int n=pre.size();
+        return build(pre,0,n-1,in,0,n-1);
+    }
+};
+```
+
+---
+
+### 4. [2185. Counting Words With a Given Prefix](https://leetcode.com/problems/counting-words-with-a-given-prefix)
+**Approach:**
+- Compare each word's prefix using `compare()`.
+
+```cpp
+class Solution {
+public:
+    int prefixCount(vector<string>& words, string pref) {
+        int ans=0;
+        for(string word: words){
+            if(word.compare(0,pref.size(),pref)==0) ans++;
+        }
+        return ans;
+    }
+};
+```
+
+---
+
+### 5. [142. Linked List Cycle II](https://leetcode.com/problems/linked-list-cycle-ii)
+**Approach:**
+- Use Floyd’s cycle detection to find intersection.
+- Then move both pointers from head and intersection point to find cycle start.
+
+```cpp
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        if(head==NULL || head->next==NULL) return NULL;
+        ListNode* fast=head;
+        ListNode* slow=head;
+        bool loop=false;
+        while(fast!=NULL && fast->next!=NULL){
+            slow=slow->next;
+            fast=fast->next->next;
+            if(slow==fast){
+                loop=true;
+                break;
+            }
+        }
+        if(!loop) return NULL;
+        ListNode* temp=head;
+        while(temp!=slow) {
+            temp=temp->next;
+            slow=slow->next;
+        }
+        return temp;
+    }
+};
+```
+
+---
