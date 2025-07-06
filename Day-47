@@ -1,0 +1,142 @@
+# Day 47 of #100DaysOfCode
+
+Solved 1 LeetCode POTD and participated in a LeetCode Contest.
+
+## ✅ 1865. [Finding Pairs With a Certain Sum](https://leetcode.com/problems/finding-pairs-with-a-certain-sum/)
+**Approach:**
+- Store the frequency of elements in `nums2` using a hashmap.
+- For `add(index, val)`, update the frequency map accordingly.
+- For `count(total)`, check for complement values using hashmap.
+
+```cpp
+class FindSumPairs {
+public:
+    vector<int> nums1;
+    vector<int> nums2;
+    unordered_map<int,int> mp;
+    FindSumPairs(vector<int>& a, vector<int>& b) {
+        nums1=a;
+        nums2=b;
+        for(int num: nums2) mp[num]++;
+    }
+    void add(int index, int val) {
+        int n=nums2[index];
+        mp[n]--;
+        nums2[index]+=val;
+        mp[n+val]++;
+    }
+    int count(int tot) {
+        int cnt=0;
+        for(int num: nums1){
+            int target=tot-num;
+            if(mp.find(target)!=mp.end()){
+                cnt+=mp[target];
+            }
+        }
+        return cnt;
+    }
+};
+```
+
+---
+
+## 🧠 LeetCode Weekly Contest
+
+### Q1. [Coupon Code Validator](https://leetcode.com/contest/biweekly-contest-130/problems/coupon-code-validator/)
+**Approach:**
+- Check if the coupon code contains only alphanumeric characters or underscores.
+- Skip if empty, not active, or invalid business category.
+- Sort and combine results by business category.
+
+```cpp
+class Solution {
+public:
+    bool isValidCode(string s){
+        for(char c: s){
+            if(!((c>=48 && c<=57) || (c>=65 && c<=90) || (c>=97 && c<=122) || (c==95))) return false;
+        }
+        return true;
+    }
+    vector<string> validateCoupons(vector<string>& code, vector<string>& businessLine, vector<bool>& isActive) {
+        vector<vector<string>> ans(4);
+        for(int i=0;i<code.size();i++){
+            if(code[i].size()==0 || !isValidCode(code[i]) || !isActive[i]) continue;
+            if(businessLine[i] == "electronics") ans[0].push_back(code[i]);
+            else if(businessLine[i] == "grocery") ans[1].push_back(code[i]);
+            else if(businessLine[i] == "pharmacy") ans[2].push_back(code[i]);
+            else if(businessLine[i] == "restaurant") ans[3].push_back(code[i]);
+        }
+        vector<string> fAns;
+        for(int i=0;i<4;i++){
+            sort(ans[i].begin(),ans[i].end());
+            for(string s: ans[i]) fAns.push_back(s);
+        }
+        return fAns;
+    }
+};
+```
+
+---
+
+### Q2. [Power Grid Maintenance](https://leetcode.com/contest/biweekly-contest-130/problems/power-grid-maintenance/)
+**Approach:**
+- Construct adjacency list from `connections`.
+- Use BFS to search for smallest online connected node if the queried node is offline.
+- Maintains a set to track offline nodes.
+- Status: ❌ Time Limit Exceeded (668 / 671 test cases passed)
+
+```cpp
+class Solution { 
+public:
+    vector<int> processQueries(int c, vector<vector<int>>& connections, vector<vector<int>>& queries) {
+        vector<int> ans;
+        set<int> nIn;
+        if(connections.size()==0){
+            for(vector<int> v: queries){
+                if(v[0]==1 ){
+                    if(nIn.find(v[1])!=nIn.end()) ans.push_back(-1);
+                    else ans.push_back(v[1]);
+                } else nIn.insert(v[1]);
+            }
+        } else {
+            vector<vector<int>> adj(c + 1);
+            for(auto& edge : connections){
+                adj[edge[0]].push_back(edge[1]);
+                adj[edge[1]].push_back(edge[0]);
+            }
+            for(vector<int> v: queries){
+                int type = v[0], node = v[1];
+                if(type == 1){
+                    if(nIn.find(node) == nIn.end()) ans.push_back(node); 
+                    else {
+                        queue<int> q;
+                        set<int> visited;
+                        q.push(node);
+                        visited.insert(node);
+                        int smallest = INT_MAX;
+                        while(!q.empty()){
+                            int curr = q.front(); q.pop();
+                            if(nIn.find(curr) == nIn.end()) smallest = min(smallest, curr);
+                            for(int nei : adj[curr]){
+                                if(visited.find(nei) == visited.end()){
+                                    visited.insert(nei);
+                                    q.push(nei);
+                                }
+                            }
+                        }
+                        if(smallest == INT_MAX) ans.push_back(-1);
+                        else ans.push_back(smallest);
+                    }
+                } else {
+                    nIn.insert(node);
+                }
+            }
+        }
+        return ans;
+    }
+};
+```
+
+---
+
+🗓️ Generated on: **July 06, 2025**
