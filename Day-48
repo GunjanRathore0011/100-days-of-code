@@ -1,0 +1,192 @@
+# Day 48 of #100DaysOfCode
+
+Solved 6 problems on LeetCode:
+
+## Problems:
+
+### 1. [1353. Maximum Number of Events That Can Be Attended](https://leetcode.com/problems/maximum-number-of-events-that-can-be-attended)
+**Approach:**
+- Sort the events by start day.
+- Use a min-heap to select the event that ends earliest.
+- For each day, attend at most one event, and remove expired events.
+
+```cpp
+class Solution {
+public:
+    int maxEvents(vector<vector<int>>& events) {
+        int n = events.size();
+        sort(begin(events), end(events));
+        priority_queue<int, vector<int>, greater<int>> pq;
+        int day = events[0][0];
+        int i = 0, count = 0;
+
+        while (!pq.empty() || i < n) {
+            if (pq.empty()) day = events[i][0];
+            while (i < n && events[i][0] == day) pq.push(events[i++][1]);
+            if (!pq.empty()) {
+                pq.pop();
+                count++;
+            }
+            day++;
+            while (!pq.empty() && pq.top() < day) pq.pop();
+        }
+        return count;
+    }
+};
+```
+
+---
+
+### 2. BFS of Graph
+**Approach:**
+- Use a queue to traverse all neighbors level by level.
+- Mark nodes as visited to avoid cycles.
+
+```cpp
+class Solution {
+  public:
+    vector<int> bfs(vector<vector<int>> &adj) {
+        int n = adj.size();
+        queue<int> q;
+        vector<int> bfs;
+        int vis[n] = {0};
+        vis[0] = 1;
+        q.push(0);
+
+        while (!q.empty()) {
+            int node = q.front(); q.pop();
+            bfs.push_back(node);
+            for (int next : adj[node]) {
+                if (vis[next] == 0) {
+                    q.push(next);
+                    vis[next] = 1;
+                }
+            }
+        }
+        return bfs;
+    }
+};
+```
+
+---
+
+### 3. DFS of Graph
+**Approach:**
+- Use recursive traversal to visit unvisited neighbors.
+- Record nodes in the DFS order.
+
+```cpp
+class Solution {
+  public:
+    void traverse(int node, vector<vector<int>>& adj, vector<int>& ls, vector<int>& vis) {
+        ls.push_back(node);
+        vis[node] = 1;
+        for (auto ele : adj[node]) {
+            if (!vis[ele]) traverse(ele, adj, ls, vis);
+        }
+    }
+    vector<int> dfs(vector<vector<int>>& adj) {
+        int n = adj.size();
+        vector<int> ls, vis(n, 0);
+        traverse(0, adj, ls, vis);
+        return ls;
+    }
+};
+```
+
+---
+
+### 4. [547. Number of Provinces](https://leetcode.com/problems/number-of-provinces)
+**Approach:**
+- Convert adjacency matrix to list.
+- Run DFS for each unvisited component.
+
+```cpp
+class Solution {
+private:
+    void dfs(int node, vector<vector<int>>& adj, vector<int>& vis) {
+        vis[node] = 1;
+        for (auto ele : adj[node]) {
+            if (!vis[ele]) dfs(ele, adj, vis);
+        }
+    }
+public:
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int n = isConnected.size(), cnt = 0;
+        vector<vector<int>> adj(n);
+        for (int i = 0; i < n; ++i)
+            for (int j = 0; j < n; ++j)
+                if (i != j && isConnected[i][j]) adj[i].push_back(j);
+        vector<int> vis(n, 0);
+        for (int i = 0; i < n; ++i)
+            if (!vis[i]) {
+                cnt++;
+                dfs(i, adj, vis);
+            }
+        return cnt;
+    }
+};
+```
+
+---
+
+### 5. [994. Rotting Oranges](https://leetcode.com/problems/rotting-oranges)
+**Approach:**
+- Multi-source BFS from all rotten oranges.
+- Track time until all reachable fresh oranges rot.
+
+```cpp
+class Solution {
+public:
+    int orangesRotting(vector<vector<int>>& grid) {
+        queue<pair<pair<int, int>, int>> q;
+        int m = grid.size(), n = grid[0].size(), cntF = 0, mt = 0, cnt = 0;
+        vector<vector<int>> vis(m, vector<int>(n));
+        for (int i = 0; i < m; ++i)
+            for (int j = 0; j < n; ++j)
+                if (grid[i][j] == 2) {
+                    vis[i][j] = 2;
+                    q.push({{i, j}, 0});
+                } else if (grid[i][j] == 1) cntF++;
+
+        int delr[] = {-1, 1, 0, 0}, delc[] = {0, 0, -1, 1};
+        while (!q.empty()) {
+            int r = q.front().first.first, c = q.front().first.second, t = q.front().second;
+            q.pop();
+            mt = max(mt, t);
+            for (int i = 0; i < 4; ++i) {
+                int nr = r + delr[i], nc = c + delc[i];
+                if (nr >= 0 && nr < m && nc >= 0 && nc < n && grid[nr][nc] == 1 && vis[nr][nc] != 2) {
+                    vis[nr][nc] = 2;
+                    cnt++;
+                    q.push({{nr, nc}, t + 1});
+                }
+            }
+        }
+        return (cnt != cntF) ? -1 : mt;
+    }
+};
+```
+
+---
+
+### 6. [108. Convert Sorted Array to Binary Search Tree](https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree)
+**Approach:**
+- Recursively select mid-point of sorted array to construct balanced BST.
+
+```cpp
+class Solution {
+public:
+    TreeNode* BST(vector<int>& nums, int lo, int hi) {
+        if (lo > hi) return NULL;
+        int mid = (lo + hi) / 2;
+        TreeNode* newNode = new TreeNode(nums[mid]);
+        newNode->left = BST(nums, lo, mid - 1);
+        newNode->right = BST(nums, mid + 1, hi);
+        return newNode;
+    }
+    TreeNode* sortedArrayToBST(vector<int>& nums) {
+        return BST(nums, 0, nums.size() - 1);
+    }
+};
+```
