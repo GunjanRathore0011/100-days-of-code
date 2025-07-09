@@ -1,0 +1,119 @@
+# Day 50 of #100DaysOfCode
+
+Solved 3 problems on LeetCode:
+
+---
+
+## 1. [392. Is Subsequence](https://leetcode.com/problems/is-subsequence)
+
+### Approach:
+- Traverse string `t` and check if all characters of `s` appear in order.
+- Use a pointer `j` to track current match index in `s`.
+
+```cpp
+class Solution {
+public:
+    bool isSubsequence(string s, string t) {
+        if(s.size()==0 && t.size()==0) return true;
+        int j=0;
+        for(int i=0;i<t.size();i++){
+            if(t[i]==s[j]) j++;
+            if(j==s.size()) return true;
+        }
+        return false;
+    }
+};
+```
+
+---
+
+## 2. [792. Number of Matching Subsequences](https://leetcode.com/problems/number-of-matching-subsequences)
+
+### Approach:
+- Use a hash map to store indices of each character in string `s`.
+- For each word in `words`, binary search (`upper_bound`) is used to check subsequence validity.
+- Avoid repeated computation using a frequency map for `words`.
+
+```cpp
+class Solution {
+public:
+    bool isSubsequence(unordered_map<char,vector<int>> & mp, string t) {
+        int prev=-1;
+        for(int i=0;i<t.size();i++){
+            char ch=t[i];
+            if(mp.find(ch)==mp.end()) return false;
+            vector<int> indices=mp[ch];
+
+            auto it=upper_bound(begin(indices),end(indices),prev);
+            if(it==indices.end()) return false;
+            prev=*it;
+        }
+        return true;
+    }
+    
+    int numMatchingSubseq(string s, vector<string>& words) {
+        int cnt=0;
+        unordered_map<string,int> mp;
+        unordered_map<char,vector<int>>  m;
+
+        for(string st: words){
+            mp[st]++;
+        }
+
+        for(int i=0;i<s.size();i++){
+            m[s[i]].push_back(i);
+        }
+        
+        for(auto st: mp){
+            if(isSubsequence(m,st.first)){
+                cnt+=st.second;
+            }
+        }
+        return cnt;
+    }
+};
+```
+
+---
+
+## 3. [2559. Count Vowel Strings in Ranges](https://leetcode.com/problems/count-vowel-strings-in-ranges)
+
+### Approach:
+- Check if a word starts and ends with a vowel.
+- Use a prefix sum array to efficiently answer range queries.
+
+```cpp
+class Solution {
+public:
+    bool isValid(string s){
+        char l=s[s.size()-1];
+        char f=s[0];
+        if((l=='a' || l=='e' || l=='i' || l=='o' || l=='u') && 
+           (f=='a' || f=='e' || f=='i' || f=='o' || f=='u')) 
+           return true;
+        return false;
+    }
+
+    vector<int> vowelStrings(vector<string>& words, vector<vector<int>>& queries) {
+        vector<int> ans;
+        int n = words.size();
+        vector<int> prefix(n, 0);
+
+        prefix[0] = isValid(words[0]) ? 1 : 0;
+        for (int i = 1; i < n; ++i) {
+            prefix[i] = prefix[i - 1] + (isValid(words[i]) ? 1 : 0);
+        }
+
+        for(vector<int> q: queries){
+            int l = q[0], r = q[1];
+            ans.push_back((prefix[r]) - ((l > 0) ? prefix[l - 1] : 0));
+        }
+        return ans;
+    }
+};
+```
+
+---
+
+🧠 Keywords: string, subsequence, prefix sum, binary search optimization  
+🛠️ Tags: `String Matching`, `Binary Search`, `Hash Map`, `Prefix Sum`
