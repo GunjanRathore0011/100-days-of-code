@@ -1,0 +1,103 @@
+
+# Day 51 of #100DaysOfCode
+
+Solved 2 problems on LeetCode:
+
+---
+
+## 1. [1047. Remove All Adjacent Duplicates In String](https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string)
+
+### Approach:
+- Iterate through the string.
+- Use a result string as a stack to track and remove adjacent duplicates.
+
+```cpp
+class Solution {
+public:
+    string removeDuplicates(string s) {
+        string ans = "";
+        ans += s[0];
+        for (int i = 1; i < s.size(); i++) {
+            if (ans.empty() || s[i] != ans.back()) ans.push_back(s[i]);
+            else ans.pop_back();
+        }
+        return ans;
+    }
+};
+```
+
+---
+
+## 2. [55. Jump Game](https://leetcode.com/problems/jump-game)
+
+### Approach 1: Recursion with Memoization (Top-down DP)
+
+```cpp
+class Solution {
+public:
+    vector<int> dp;
+    bool solve(vector<int>& nums, int n, int idx) {
+        if (idx == n - 1) return true;
+        if (idx >= n) return true;
+        if (dp[idx] != -1) return dp[idx];
+
+        for (int i = 1; i <= nums[idx]; i++) {
+            if (solve(nums, n, idx + i)) return dp[idx] = true;
+        }
+        return dp[idx] = false;
+    }
+
+    bool canJump(vector<int>& nums) {
+        dp.resize(nums.size(), -1);
+        return solve(nums, nums.size(), 0);
+    }
+};
+```
+
+### Approach 2: Tabulation (Bottom-up DP)
+
+```cpp
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
+        int n = nums.size();
+        vector<bool> dp(n, false);
+        dp[0] = true;
+
+        for (int i = 1; i < n; i++) {
+            int j = i - 1;
+            while (j >= 0) {
+                if (dp[j] && nums[j] + j >= i) {
+                    dp[i] = true;
+                    break;
+                }
+                j--;
+            }
+            if (!dp[i]) break;
+        }
+        return dp[n - 1];
+    }
+};
+```
+
+### Approach 3: Greedy
+
+```cpp
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
+        int maxReachable = 0;
+        int n = nums.size();
+        for (int i = 0; i < n; i++) {
+            if (i > maxReachable) return false;
+            maxReachable = max(maxReachable, nums[i] + i);
+        }
+        return true;
+    }
+};
+```
+
+---
+
+🧠 Keywords: string manipulation, recursion, dynamic programming, greedy  
+🛠️ Tags: `Stack Simulation`, `Dynamic Programming`, `Greedy`, `Memoization`, `Tabulation`
