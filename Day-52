@@ -1,0 +1,44 @@
+# Day 52 of #100DaysOfCode
+
+Today was tough — mentally and physically. I felt completely exhausted.
+
+Still, I made the decision to **not break the streak** and solved an easy problem to keep going. I’ll bounce back stronger tomorrow 💪
+
+---
+
+## ✅ Problem Solved:
+
+### [58. Length of Last Word](https://leetcode.com/problems/length-of-last-word)
+
+### Approach:
+- Start from the end of the string and skip trailing spaces.
+- Count characters until the next space is encountered.
+- Return the length of the last word.
+
+```cpp
+class Solution {
+public:
+    int lengthOfLastWord(string s) {
+        int i = s.size() - 1;
+
+        while (i >= 0 && s[i] == ' ') {
+            i--;
+        }
+
+        int length = 0;
+        while (i >= 0 && s[i] != ' ') {
+            length++;
+            i--;
+        }
+
+        return length;
+    }
+};
+```
+
+---
+
+🧠 Reflection:
+Sometimes, no matter how well you plan your day, energy just doesn’t show up. It’s okay. The important thing is **to not quit**.
+
+#KeepGoing #ProgressNotPerfection
