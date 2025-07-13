@@ -1,0 +1,59 @@
+
+# 🧠 Day 54 of 100 Days of Code
+
+Today I worked on LeetCode problems that required efficient sorting and string manipulation.
+
+---
+
+### ✅ 2410. Maximum Matching of Players With Trainers  
+🔗 [Leetcode Link](https://leetcode.com/problems/maximum-matching-of-players-with-trainers/)  
+🧠 **Concepts:** Greedy, Sorting
+
+```cpp
+class Solution {
+public:
+    int matchPlayersAndTrainers(vector<int>& players, vector<int>& trainers) {
+        sort(players.begin(), players.end());
+        sort(trainers.begin(), trainers.end());
+
+        int i = players.size() - 1;
+        int j = trainers.size() - 1;
+        int cnt = 0;
+
+        while (i >= 0 && j >= 0) {
+            if (players[i] <= trainers[j]) {
+                cnt++;
+                j--;
+            }
+            i--;
+        }
+        return cnt;
+    }
+};
+```
+
+---
+
+### ✅ Q1. Process String with Special Operations I  
+🧠 **Concepts:** String Processing, Stack-like behavior
+
+```cpp
+class Solution {
+public:
+    string processStr(string s) {
+        string ans = "";
+        for (char ch : s) {
+            if (islower(ch)) ans += ch;
+            else if (ch == '*' && !ans.empty()) ans.pop_back();
+            else if (ch == '#') ans += ans;
+            else if (ch == '%') reverse(ans.begin(), ans.end());
+        }
+        return ans;
+    }
+};
+```
+
+---
+
+📅 _Progress: Day 54/100_  
+💻 _Consistent efforts yield strong results!_
