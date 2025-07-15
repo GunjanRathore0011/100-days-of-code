@@ -1,0 +1,42 @@
+
+# 🧠 Day 56 of 100 Days of Code
+
+Solved one LeetCode POTD focused on string validation and character classification.
+
+---
+
+### ✅ 3136. Valid Word  
+🔗 [Leetcode Link](https://leetcode.com/problems/valid-word/)  
+🧠 **Concepts:** String Traversal, Character Checks
+
+```cpp
+class Solution {
+public:
+    bool isValid(string word) {
+        int n=word.size();
+
+        if(n<3) return false;
+        bool vowel=false;
+        bool consto=false;
+        string vowelList = "aeiouAEIOU";
+
+        for(int i=0;i<n;i++){
+            char c=word[i];
+            if(isalpha(c)){
+                if(vowelList.find(c) != string::npos) vowel=true;
+                else consto=true;
+            }
+            else if(!isdigit(c)){
+                return false;
+            }
+        }
+        if(vowel && consto) return true;
+        return false;
+    }
+};
+```
+
+---
+
+📅 _Progress: Day 56/100_  
+💻 _Bit-by-bit progress brings clarity and confidence!_
