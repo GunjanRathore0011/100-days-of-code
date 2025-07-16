@@ -1,0 +1,57 @@
+
+# 🧠 Day 57 of 100 Days of Code
+
+Solved a LeetCode Binary Search-based problem involving optimization of speed.
+
+---
+
+### ✅ 875. Koko Eating Bananas  
+🔗 [Leetcode Link](https://leetcode.com/problems/koko-eating-bananas/)  
+🧠 **Concepts:** Binary Search, Greedy
+
+```cpp
+class Solution {
+public:
+    bool canEat(int s,vector<int>& piles,int hr){
+        int count=0;
+        for(int i=0;i<piles.size();i++){
+            if(count>hr) return false;
+            if(piles[i]<=s){
+                count++;
+            }
+            else{
+                if(piles[i]%s==0) count+=piles[i]/s;
+                else count+=(piles[i]/s)+1;
+            }
+        }
+        if(count<=hr) return true;
+        else return false;
+    }
+    int minEatingSpeed(vector<int>& piles, int h) {
+        int lo=1;
+        int hi=-1;
+        int n=piles.size();
+        for(int i=0;i<n;i++){
+            hi=max(hi,piles[i]);
+        }
+        int mid=-1;
+        int speedHr=1;
+        while(lo<=hi){
+            mid=lo+(hi-lo)/2;
+            // can eat all the banas within the given limit of hours with the speed 
+            // of eating bananas mid per hour
+            if(canEat(mid,piles,h)){
+                speedHr=mid;
+                hi=mid-1;
+            }
+            else lo=mid+1;
+        }
+        return speedHr;
+    }
+};
+```
+
+---
+
+📅 _Progress: Day 57/100_  
+💻 _Optimizing logic using binary search – step by step!_
