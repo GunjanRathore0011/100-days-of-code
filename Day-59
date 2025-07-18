@@ -1,0 +1,109 @@
+
+# 🚀 Day 59 - Stack Problems
+
+This repository contains solutions for the following stack-related problems solved on **Day 59** of the #100DaysOfCode challenge.
+
+---
+
+## 🔹 1. Infix to Postfix
+
+**Problem:** Convert an infix expression to a postfix expression.
+
+**LeetCode/GFG Tag:** Expression Conversion
+
+```cpp
+class Solution {
+  private:
+        int pri(char c){
+            if(c=='^') return 3;
+            if(c=='*' || c=='/') return 2;
+            if(c=='+' || c=='-') return 1;
+            return -1;
+        }
+  public:
+    string infixToPostfix(string& s) {
+        stack<char> st;
+        string ans="";
+        
+        for(char c: s){
+            if((c>='A' && c<='Z')|| (c>='a' && c<='z') || (c>='0' && c<='9')) ans+=c;
+            else if(c=='(') st.push(c);
+            else if(c==')') {
+                while(!st.empty() &&  st.top()!='(') {
+                    ans+=st.top();
+                    st.pop();
+                }
+                st.pop();
+            }
+            else{
+                while(!st.empty() && pri(c)<=pri(st.top())){
+                    ans+=st.top();
+                    st.pop();
+                }
+                st.push(c);
+            }
+        }
+        
+        while(!st.empty()){
+            ans+=st.top();
+            st.pop();
+        }
+        return ans;
+    }
+};
+```
+
+---
+
+## 🔹 2. Implement Stack using Array
+
+**Problem:** Implement a basic stack using an array.
+
+```cpp
+// Function to push an integer into the stack.
+void MyStack ::push(int x) {
+    if(top== 999) return;
+    arr[++top]=x;
+}
+
+// Function to remove an item from top of the stack.
+int MyStack ::pop() {
+    if(top==-1) return top;
+    else{
+        int t=arr[top];
+        top--;
+        return t;
+    }
+}
+```
+
+---
+
+## 🔹 3. Valid Parentheses
+
+**LeetCode Problem:** [20. Valid Parentheses](https://leetcode.com/problems/valid-parentheses/)
+
+```cpp
+class Solution {
+public:
+    bool isValid(string s) {
+        stack<char> st;
+
+        for(char c: s){
+            if(c=='(' || c=='[' || c=='{') st.push(c);
+            else{
+                if(st.empty()) return false;
+                char ch=st.top();
+                if((c==')' && ch=='(') || (c==']' && ch=='[') || (c=='}' && ch=='{')) st.pop();
+                else return false;
+            }
+        }
+
+        return st.empty();
+    }
+};
+```
+
+---
+
+🗓️ **Progress:** Day 59 of #100DaysOfCode
