@@ -1,0 +1,98 @@
+
+# 🚀 Day 60 - #100DaysOfCode
+
+Today I solved 3 LeetCode problems:
+
+---
+
+## 🔹 1233. Remove Sub-Folders from the Filesystem
+
+### 🔸 Problem Link:
+[Remove Sub-Folders from the Filesystem – LeetCode](https://leetcode.com/problems/remove-sub-folders-from-the-filesystem/)
+
+### 🔸 Code:
+```cpp
+class Solution {
+public:
+    vector<string> removeSubfolders(vector<string>& folder) {
+        unordered_set<string> s;
+        for(string st: folder) s.insert(st);
+        vector<string> ans;
+
+        for(string& st: folder){
+            string parent=st;
+            bool subFolder=false;
+
+            while(!parent.empty()){
+                size_t pos=parent.find_last_of('/');
+                parent=parent.substr(0,pos);
+                if(s.find(parent)!=s.end()) {
+                    subFolder=true;
+                    break;
+                }
+            }
+            if(!subFolder) ans.push_back(st);
+        }
+        return ans;
+    }
+};
+```
+
+---
+
+## 🔹 2068. Check Whether Two Strings are Almost Equivalent
+
+### 🔸 Problem Link:
+[Check Whether Two Strings are Almost Equivalent – LeetCode](https://leetcode.com/problems/check-whether-two-strings-are-almost-equivalent/)
+
+### 🔸 Code:
+```cpp
+class Solution {
+public:
+    bool checkAlmostEquivalent(string word1, string word2) {
+        vector<int> f1(26,0);
+        for(char& c: word1) f1[c-'a']++;
+        for(char& c: word2) f1[c-'a']--;
+
+        for(int i=0;i<26;i++){
+            if(abs(f1[i])>3) return false;
+        }
+        return true;
+    }
+};
+```
+
+---
+
+## 🔹 1143. Longest Common Subsequence
+
+### 🔸 Problem Link:
+[Longest Common Subsequence – LeetCode](https://leetcode.com/problems/longest-common-subsequence/)
+
+### 🔸 Code:
+```cpp
+class Solution {
+public:
+    vector<vector<int>> dp;
+
+    int solve(const string &s1, const string &s2, int i, int j) {
+        if (i >= s1.size() || j >= s2.size()) return 0;
+        if (dp[i][j] != -1) return dp[i][j];
+
+        if (s1[i] == s2[j])
+            return dp[i][j] = 1 + solve(s1, s2, i + 1, j + 1);
+        else
+            return dp[i][j] = max(solve(s1, s2, i + 1, j), solve(s1, s2, i, j + 1));
+    }
+
+    int longestCommonSubsequence(string text1, string text2) {
+        int n = text1.size(), m = text2.size();
+        dp.assign(n, vector<int>(m, -1));
+        return solve(text1, text2, 0, 0);
+    }
+};
+```
+
+---
+
+✅ Happy to reach Day 60 of #100DaysOfCode!
