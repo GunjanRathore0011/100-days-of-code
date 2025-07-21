@@ -1,0 +1,91 @@
+
+# Day 62 of #100DaysOfCode
+
+Today I solved three LeetCode problems focused on string and array manipulation.
+
+---
+
+## 🧩 1957. Delete Characters to Make Fancy String
+
+### Problem Link:
+[LeetCode 1957](https://leetcode.com/problems/delete-characters-to-make-fancy-string/)
+
+### Code:
+```cpp
+class Solution {
+public:
+    string makeFancyString(string s) {
+        string ans="";
+        ans+=s[0];
+        int cnt=1;
+        for(int i=1;i<s.size();i++){
+            if(s[i]==ans.back()){
+                cnt++;
+            }
+            else cnt=1;
+            if(cnt<3) {
+                ans+=s[i];
+            }
+        }
+        return ans;
+    }
+};
+```
+
+---
+
+## 🧩 26. Remove Duplicates from Sorted Array
+
+### Problem Link:
+[LeetCode 26](https://leetcode.com/problems/remove-duplicates-from-sorted-array/)
+
+### Code:
+```cpp
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        int n=nums.size();
+        int i=0;
+        int j=1;
+        while(j<n){
+            if(nums[i]!=nums[j]){
+                nums[++i]=nums[j];
+            }
+            j++;
+        }
+        return i+1;
+    }
+};
+```
+
+---
+
+## 🧩 80. Remove Duplicates from Sorted Array II
+
+### Problem Link:
+[LeetCode 80](https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/)
+
+### Code:
+```cpp
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        int n=nums.size();
+        int i=2;
+        int k=2;
+        if(n<=2) return n;
+        while(i<n){
+            if(nums[i]!=nums[k-2]){
+                nums[k]=nums[i];
+                k++;
+            }
+            i++;
+        }
+        return k;
+    }
+};
+```
+
+---
+
+✅ Stay consistent. Keep coding. #100DaysOfCode
