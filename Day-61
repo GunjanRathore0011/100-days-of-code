@@ -1,0 +1,61 @@
+# 🚀 Day 61 - July 21, 2025
+
+Today I solved two interesting problems on LeetCode:
+
+---
+
+## 🧪 1. Container With Most Water (LeetCode 11)
+**Problem Link:** [LeetCode 11](https://leetcode.com/problems/container-with-most-water/)
+
+**Approach:**  
+Used two pointers starting from both ends. Calculated the area between the two lines and moved the pointer pointing to the shorter line inward to try and find a potentially larger area.
+
+```cpp
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int i=0;
+        int j=height.size()-1;
+        int maxA=0;
+        while(i<j){
+            int minH=min(height[i],height[j]);
+            int amount= minH * (j-i);
+            maxA=max(maxA,amount);
+            if(height[i]>=height[j]) j--;
+            else i++;
+        }
+        return maxA;
+    }
+};
+```
+
+---
+
+## ✅ 2. Check Divisibility by Digit Sum and Product
+**Approach:**  
+Calculated the digit sum and product of the number. Checked if the number is divisible by the sum of both.
+
+```cpp
+class Solution {
+public:
+    bool checkDivisibility(int n) {
+        int dsum=0;
+        int dProd=1;
+        int num=n;
+        while(n>0){
+            dsum+=(n%10);
+            dProd*=(n%10);
+            n=n/10;
+        }
+        if((num%(dsum+dProd)==0) )return true;
+        return false;
+    }
+};
+```
+
+---
+
+📌 **Progress:** Day 61 of #100DaysOfCode  
+🏁 **Focus:** Problem Solving with C++  
+📝 **Topics:** Two Pointers, Math, Logic Building
+
