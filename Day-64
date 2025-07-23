@@ -1,0 +1,87 @@
+# Day 64 of #100DaysOfCode
+
+Today’s LeetCode Problem:  
+🔹 **1717. Maximum Score From Removing Substrings**
+
+**Problem Link:** [LeetCode - 1717](https://leetcode.com/problems/maximum-score-from-removing-substrings/)  
+**Tags:** Stack, Greedy, String Manipulation  
+
+---
+
+## Problem Description
+
+Given a string `s` and two integers `x` and `y`, your task is to remove as many "ab" or "ba" substrings as possible to get the maximum total score. Removing "ab" gives `x` points and "ba" gives `y` points.
+
+---
+
+## Approach
+
+1. First remove the more valuable substring (`ab` if x > y, otherwise `ba`).
+2. Use a stack to greedily remove matching pairs.
+3. Repeat the process for the other substring.
+4. Return the accumulated score.
+
+---
+
+## Code (C++)
+
+Solved with help from [@hukman](https://leetcode.com/hukman)
+
+```cpp
+// 1717. Maximum Score From Removing Substrings
+class Solution {
+public:
+    int maximumGain(string s, int x, int y) {
+        int n = s.length();
+        int score = 0;
+
+        string maxStr = (x > y) ? "ab" : "ba";
+        string minStr = (maxStr == "ab") ? "ba" : "ab"; 
+
+        //First Pass
+        string temp_first = removeSubstring(s, maxStr);
+        int removedPairsCount = (n - temp_first.length()) / 2;
+        score+= removedPairsCount * max(x, y);
+
+        //Second Pass
+        string temp_second = removeSubstring(temp_first, minStr);
+        removedPairsCount = (temp_first.length() - temp_second.length()) / 2;
+        score += removedPairsCount * min(x, y);
+
+        return score;
+    }
+
+private:
+    string removeSubstring(string& s, string& matchStr) {
+        stack<char> st;
+
+        for (char &ch : s) {
+            if (ch == matchStr[1] && !st.empty() && st.top() == matchStr[0]) {
+                st.pop();
+            } else {
+                st.push(ch);
+            }
+        }
+
+        string remainStr;
+        while (!st.empty()) {
+            remainStr.push_back(st.top());
+            st.pop();
+        }
+        reverse(remainStr.begin(), remainStr.end());
+        return remainStr;
+    }
+};
+```
+
+---
+
+## Learnings
+
+- Used **stack** to perform greedy substring removal.
+- Handled **string mutation** with a custom helper function.
+- Practiced **greedy + stack-based string manipulation** pattern.
+
+---
+
+⏳ Day 64 Progress Logged.
