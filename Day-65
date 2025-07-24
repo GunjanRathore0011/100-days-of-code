@@ -1,0 +1,97 @@
+# Day 65 of #100DaysOfCode
+
+Today I solved 3 problems on LeetCode using C++:
+
+---
+
+### 🔹 402. Remove K Digits  
+**Problem Link:** [LeetCode 402](https://leetcode.com/problems/remove-k-digits/)  
+**Category:** Greedy, Stack
+
+```cpp
+class Solution {
+public:
+    string removeKdigits(string num, int k) {
+        string s="";
+        if(num.size()==k) return "0";
+        for(int i=0;i<num.size();i++){
+            while(!s.empty() && num[i]<s.back() && k){
+               s.pop_back();
+               k--;
+            }
+            s+=num[i];
+        }
+        while(k>0){
+            s.pop_back();
+            k--;
+        }
+        s.erase(0, s.find_first_not_of('0'));
+        if(s.size()==0) return "0";
+        return s;
+    }
+};
+```
+
+---
+
+### 🔹 844. Backspace String Compare  
+**Problem Link:** [LeetCode 844](https://leetcode.com/problems/backspace-string-compare/)  
+**Category:** Stack, String Simulation
+
+```cpp
+class Solution {
+public:
+    bool backspaceCompare(string s, string t) {
+        string sAns="";
+        for(char c: s){
+            if(c=='#') {
+                if(!sAns.empty()) sAns.pop_back();
+            }
+            else sAns+=c;
+        }
+        string tAns="";
+        for(char c: t){
+            if(c=='#') {
+                if(!tAns.empty()) tAns.pop_back();
+            }
+            else tAns+=c;
+        }
+        if(sAns.size()!=tAns.size()) return false;
+        for(int i=0;i<sAns.size();i++){
+            if(sAns[i]!=tAns[i]) return false;
+        }
+        return true;
+    }
+};
+```
+
+---
+
+### 🔹 1880. Check if Word Equals Summation of Two Words  
+**Problem Link:** [LeetCode 1880](https://leetcode.com/problems/check-if-word-equals-summation-of-two-words/)  
+**Category:** String, Math
+
+```cpp
+class Solution {
+public:
+    string convert(string word) {
+        string res = "";
+        for (char c : word) {
+            int digit = c - 'a';           
+            res += to_string(digit);        
+        }
+        return res;
+    }
+
+    bool isSumEqual(string firstWord, string secondWord, string targetWord) {
+        return stoi(convert(firstWord)) + stoi(convert(secondWord)) == stoi(convert(targetWord));
+    }
+};
+```
+
+---
+
+✅ Concepts practiced today:
+- Stack manipulation
+- Greedy algorithms
+- String conversions and edge-case handling
