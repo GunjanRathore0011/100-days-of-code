@@ -1,0 +1,121 @@
+
+# Day 67 - 100 Days of Code
+
+Today I solved 3 classic recursion/backtracking problems on LeetCode using C++.
+
+---
+
+## ✅ Problems Solved:
+
+### 1. [78. Subsets](https://leetcode.com/problems/subsets/)
+- Used recursion with inclusion/exclusion.
+- Explored all subsets by backtracking.
+
+```cpp
+class Solution {
+private:
+    void helper(int idx, vector<int>& arr, vector<vector<int>>& ans, vector<int>& v) {
+        if (idx == arr.size()) {
+            ans.push_back(v);
+            return;
+        }
+        helper(idx + 1, arr, ans, v);
+        v.push_back(arr[idx]);
+        helper(idx + 1, arr, ans, v);
+        v.pop_back();
+    }
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> ans;
+        vector<int> v;
+        helper(0, nums, ans, v);
+        return ans;
+    }
+};
+```
+
+---
+
+### 2. [77. Combinations](https://leetcode.com/problems/combinations/)
+- Similar to subsets with fixed length `k`.
+- Recursive traversal with element choices.
+
+```cpp
+class Solution {
+private:
+    void helper(int num, int k, int n, vector<vector<int>>& ans, vector<int>& v) {
+        if (v.size() == k) {
+            ans.push_back(v);
+            return;
+        }
+        if (num > n) return;
+        helper(num + 1, k, n, ans, v);
+        v.push_back(num);
+        helper(num + 1, k, n, ans, v);
+        v.pop_back();
+    }
+
+public:
+    vector<vector<int>> combine(int n, int k) {
+        vector<vector<int>> ans;
+        vector<int> v;
+        helper(1, k, n, ans, v);
+        return ans;
+    }
+};
+```
+
+---
+
+### 3. [39. Combination Sum](https://leetcode.com/problems/combination-sum/)
+- Allowed repeated use of elements.
+- Base condition on target == 0 to add valid combinations.
+
+```cpp
+class Solution {
+private:
+    void findCombination(int idx, int target, vector<int>& arr, vector<vector<int>>& ans, vector<int>& v) {
+        if (idx == arr.size()) {
+            if (target == 0) ans.push_back(v);
+            return;
+        }
+        if (arr[idx] <= target) {
+            v.push_back(arr[idx]);
+            findCombination(idx, target - arr[idx], arr, ans, v);
+            v.pop_back();
+        }
+        findCombination(idx + 1, target, arr, ans, v);
+    }
+
+public:
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<int>> ans;
+        vector<int> v;
+        findCombination(0, target, candidates, ans, v);
+        return ans;
+    }
+};
+```
+
+---
+
+## 🧠 Concepts Practiced:
+- Recursive tree building
+- Backtracking logic
+- Subset generation
+- Fixed-size combinations
+- Handling base cases and pruning
+
+---
+
+## 🛠️ Language Used:
+- C++
+
+---
+
+## 📌 Reflection:
+Faced some tricky base case handling, especially in `Combination Sum`, but recursion flow is getting much clearer now. On to more variations tomorrow!
+
+---
+
+#100DaysOfCode #DSA #CPP #Recursion #Backtracking #LeetCode #GunjanCodes
