@@ -1,0 +1,135 @@
+
+# Day 68 - 100 Days of Code
+
+Today I solved 3 problems, focusing on pattern recognition and recursion/backtracking.
+
+---
+
+## ✅ Problems Solved:
+
+### 1. [2210. Count Hills and Valleys in an Array](https://leetcode.com/problems/count-hills-and-valleys-in-an-array/)
+- Used a two-pointer technique to check for hill and valley patterns.
+- Skipped consecutive equal elements logically using index updates.
+
+```cpp
+class Solution {
+public:
+    int countHillValley(vector<int>& nums) {
+        int i = 0;
+        int j = 1;
+        int cnt = 0;
+
+        while (j < nums.size() - 1) {
+            if ((nums[i] > nums[j] && nums[j + 1] > nums[j]) ||
+                (nums[i] < nums[j] && nums[j + 1] < nums[j])) {
+                cnt++;
+                i = j;
+            }
+            j++;
+        }
+        return cnt;
+    }
+};
+```
+
+---
+
+### 2. [46. Permutations](https://leetcode.com/problems/permutations/)
+- Solved using backtracking with a set to track visited elements.
+- Generates all possible permutations.
+
+```cpp
+class Solution {
+public:
+    unordered_set<int> st;
+    vector<vector<int>> result;
+
+    void solve(vector<int>& nums, vector<int>& temp) {
+        if (nums.size() == temp.size()) {
+            result.push_back(temp);
+            return;
+        }
+        for (int i = 0; i < nums.size(); i++) {
+            if (st.find(nums[i]) == st.end()) {
+                st.insert(nums[i]);
+                temp.push_back(nums[i]);
+
+                solve(nums, temp);
+                temp.pop_back();
+                st.erase(nums[i]);
+            }
+        }
+    }
+
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<int> temp;
+        solve(nums, temp);
+        return result;
+    }
+};
+```
+
+---
+
+### 3. [47. Permutations II](https://leetcode.com/problems/permutations-ii/)
+- Handled duplicates using a hash map for frequency.
+- Recursive DFS to build unique permutations.
+
+```cpp
+class Solution {
+public:
+    vector<vector<int>> result;
+    int n;
+
+    void solve(unordered_map<int, int>& mp, vector<int>& temp) {
+        if (temp.size() == n) {
+            result.push_back(temp);
+        }
+
+        for (auto& [num, count] : mp) {
+            if (count == 0) continue;
+            temp.push_back(num);
+            mp[num]--;
+
+            solve(mp, temp);
+
+            temp.pop_back();
+            mp[num]++;
+        }
+    }
+
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        n = nums.size();
+        unordered_map<int, int> mp;
+        for (int num : nums) {
+            mp[num]++;
+        }
+        vector<int> temp;
+        solve(mp, temp);
+        return result;
+    }
+};
+```
+
+---
+
+## 🧠 Concepts Practiced:
+- Two-pointer technique
+- Pattern detection (hill/valley)
+- Backtracking with/without duplicates
+- Frequency maps and pruning
+
+---
+
+## 🛠️ Language Used:
+- C++
+
+---
+
+## 📌 Reflection:
+Backtracking is becoming clearer with each problem.  
+Understanding how to handle duplicates in permutations was the key learning today.
+
+---
+
+#100DaysOfCode #DSA #CPP #Backtracking #LeetCode #GunjanCodes
