@@ -1,0 +1,80 @@
+
+# Day 69 - 100 Days of Code
+
+Today I solved a classic 2D matrix traversal problem on LeetCode using C++.
+
+---
+
+## ✅ Problem Solved:
+
+### [54. Spiral Matrix](https://leetcode.com/problems/spiral-matrix/)
+- Traversed the matrix in spiral order using boundary tracking.
+- Carefully managed loop limits and direction flow (right → down → left → up).
+- Used variables `minr`, `maxr`, `minc`, and `maxc` to track bounds.
+
+```cpp
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        int m = matrix.size();
+        int n = matrix[0].size();
+        vector<int> v;
+        int minr = 0, minc = 0;
+        int maxr = m - 1, maxc = n - 1;
+        int tne = n * m;
+        int count = 0;
+
+        while (minr <= maxr && minc <= maxc) {
+            // Right
+            for (int j = minc; j <= maxc && count < tne; j++) {
+                v.push_back(matrix[minr][j]);
+                count++;
+            }
+            minr++;
+
+            // Down
+            for (int i = minr; i <= maxr && count < tne; i++) {
+                v.push_back(matrix[i][maxc]);
+                count++;
+            }
+            maxc--;
+
+            // Left
+            for (int j = maxc; j >= minc && count < tne; j--) {
+                v.push_back(matrix[maxr][j]);
+                count++;
+            }
+            maxr--;
+
+            // Up
+            for (int i = maxr; i >= minr && count < tne; i--) {
+                v.push_back(matrix[i][minc]);
+                count++;
+            }
+            minc++;
+        }
+        return v;
+    }
+};
+```
+
+---
+
+## 🧠 Concepts Practiced:
+- 2D matrix traversal
+- Spiral order logic
+- Boundary condition handling
+
+---
+
+## 🛠️ Language Used:
+- C++
+
+---
+
+## 📌 Reflection:
+Matrix problems need clean logic and tight boundary checks. Spiral traversal helped reinforce controlled loops and edge condition handling.
+
+---
+
+#100DaysOfCode #DSA #CPP #MatrixTraversal #LeetCode #GunjanCodes
