@@ -1,0 +1,59 @@
+
+# Day 71 - 100 Days of Code
+
+Today I solved a bitwise operation-based array problem on LeetCode using C++.
+
+---
+
+## ✅ Problem Solved:
+
+### [2419. Longest Subarray With Maximum Bitwise AND](https://leetcode.com/problems/longest-subarray-with-maximum-bitwise-and/)
+- Identified the maximum element in the array.
+- Traversed the array to count the length of the longest contiguous subarray having the maximum element.
+- Used two passes: one to find max, one to count.
+
+```cpp
+class Solution {
+public:
+    int longestSubarray(vector<int>& nums) {
+        int mEle = INT_MIN;
+
+        for (int& num : nums)
+            mEle = max(mEle, num);
+
+        int maxC = 1;
+        int curr = 0;
+
+        for (int num : nums) {
+            if (num == mEle)
+                curr++;
+            else
+                curr = 0;
+            maxC = max(maxC, curr);
+        }
+        return maxC;
+    }
+};
+```
+
+---
+
+## 🧠 Concepts Practiced:
+- Bitwise AND logic
+- Maximum element tracking
+- Subarray length computation
+
+---
+
+## 🛠️ Language Used:
+- C++
+
+---
+
+## 📌 Reflection:
+This problem was more about observation than complex logic.  
+Recognizing that only subarrays of the max element contribute to the result was the key.
+
+---
+
+#100DaysOfCode #DSA #CPP #Bitwise #LeetCode #GunjanCodes
