@@ -1,0 +1,58 @@
+
+# Day 73 - 100 Days of Code
+
+Today I solved a classic mathematical pattern problem involving Pascal's Triangle.
+
+---
+
+## ✅ Problem Solved:
+
+### [118. Pascal's Triangle](https://leetcode.com/problems/pascals-triangle/)
+- Constructed Pascal's Triangle using a brute-force approach.
+- Used nested loops and the basic property:  
+  `value = previous_row[j] + previous_row[j-1]`
+
+```cpp
+class Solution {
+public:
+
+    // Brute force
+    vector<vector<int>> generate(int numRows) {
+        vector< vector<int> > v;
+        for(int i = 1; i <= numRows; i++) {
+            vector<int> a(i);
+            v.push_back(a);
+        }
+        for(int i = 0; i < numRows; i++) {
+            for(int j = 0; j <= i; j++) {
+                if(i == j || j == 0)
+                    v[i][j] = 1;
+                else
+                    v[i][j] = v[i-1][j] + v[i-1][j-1];
+            }
+        }
+        return v;
+    }
+};
+```
+
+---
+
+## 🧠 Concepts Practiced:
+- Mathematical pattern (Pascal's Triangle)
+- 2D vector manipulation
+- Triangle construction via DP relation
+
+---
+
+## 🛠️ Language Used:
+- C++
+
+---
+
+## 📌 Reflection:
+Brute-force was sufficient here due to the small constraints. Understanding the triangle’s recursive structure helped simplify the implementation.
+
+---
+
+#100DaysOfCode #DSA #CPP #LeetCode #GunjanCodes #PascalsTriangle
